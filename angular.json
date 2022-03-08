@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "multikart": {
+    "toosie": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -28,7 +28,7 @@
               "rxjs/Subject",
               "rxjs/Subscription"
             ],
-            "outputPath": "dist/multikart/browser",
+            "outputPath": "dist/toosie/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -85,18 +85,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "multikart:build"
+            "browserTarget": "toosie:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "multikart:build:production"
+              "browserTarget": "toosie:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "multikart:build"
+            "browserTarget": "toosie:build"
           }
         },
         "test": {
@@ -120,18 +120,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "multikart:serve"
+            "devServerTarget": "toosie:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "multikart:serve:production"
+              "devServerTarget": "toosie:serve:production"
             }
           }
         },
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/multikart/server",
+            "outputPath": "dist/toosie/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json",
             "sourceMap": true,
@@ -154,21 +154,21 @@
         "serve-ssr": {
           "builder": "@nguniversal/builders:ssr-dev-server",
           "options": {
-            "browserTarget": "multikart:build",
-            "serverTarget": "multikart:server"
+            "browserTarget": "toosie:build",
+            "serverTarget": "toosie:server"
           },
           "configurations": {
             "production": {
-              "browserTarget": "multikart:build:production",
-              "serverTarget": "multikart:server:production"
+              "browserTarget": "toosie:build:production",
+              "serverTarget": "toosie:server:production"
             }
           }
         },
         "prerender": {
           "builder": "@nguniversal/builders:prerender",
           "options": {
-            "browserTarget": "multikart:build:production",
-            "serverTarget": "multikart:server:production",
+            "browserTarget": "toosie:build:production",
+            "serverTarget": "toosie:server:production",
             "routes": [
               "/"
             ]
@@ -180,7 +180,7 @@
       }
     }
   },
-  "defaultProject": "multikart",
+  "defaultProject": "toosie",
   "cli": {
     "analytics": false
   }
