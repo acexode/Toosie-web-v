@@ -1,0 +1,33 @@
+<app-breadcrumb [title]="'Blog No Sidebar'" [breadcrumb]="'Blog No Sidebar'"></app-breadcrumb>
+<!-- section start -->
+<section class="section-b-space  blog-page">
+    <div class="container">
+        <div class="row">
+            <!--Blog List start-->
+            <div class="col-xl-12 col-lg-8 col-md-7 ">
+                <div *ngFor="let blog of blogs" class="row blog-media">
+                    <div class="col-xl-6">
+                        <div class="blog-left">
+                            <a [routerLink]="'/pages/blog/details/' + blog._id"><img [src]="blog.blogImage" class="img-fluid" alt=""/></a>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="blog-right">
+                            <div>
+                                <h6>25 January 2018</h6>
+                                <a [routerLink]="'/pages/blog/details'"><h4>{{blog.blogTitle}}</h4></a>
+                                <ul class="post-social">
+                                    <li>Posted By : {{blog.blogAuthor.email}} </li>
+                                   
+                                </ul>
+                                <p>{{blog.blogContent | slice: 0: 50}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Blog List start-->
+        </div>
+    </div>
+</section>
+<!-- Section ends -->
