@@ -267,7 +267,8 @@
             "white",
             "black"
         ],
-        "variants": [{
+        "variants": [
+            {
                 "variant_id": 301,
                 "id": 3,
                 "sku": "sku3",

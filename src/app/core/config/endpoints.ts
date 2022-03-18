@@ -49,6 +49,11 @@ export const miscEndpoint = {
     mediaUpload: baseEndpoints.inventory + '/media/upload',
 };
 export const inventoryEndpoints = {
+    createInventory: baseEndpoints.inventory + '/product/new',
+    getProduct: baseEndpoints.inventory + '/product/open/',
+    createCategory: baseEndpoints.inventory + '/category/new',
+    createBrand: baseEndpoints.inventory + '/brand/new',
+    createTags: baseEndpoints.inventory + '/tags/new',
     allCategories: baseEndpoints.inventory + '/category/all',
     allTags: baseEndpoints.inventory + '/tags/all',
     brands: baseEndpoints.inventory + '/brands/all',
@@ -56,9 +61,9 @@ export const inventoryEndpoints = {
     searchInventory: baseEndpoints.inventory + '/product/search',
     popular: baseEndpoints.inventory + '/product/popular',
     latest: baseEndpoints.inventory + '/product/latest',
-    single: baseEndpoints.inventory + '/product/open/',
     savePODOrder: baseEndpoints.inventory + '/order/save',
     saveCardOrder: baseEndpoints.inventory + '/order/card/save',
     saveTokenOrder: baseEndpoints.inventory + '/order/token/card/save',
-    myOrders: baseEndpoints.inventory + '/order/mine/'
+    myOrders: baseEndpoints.inventory + '/order/mine/',
+    single: baseEndpoints.inventory + '/product/open/',
 };

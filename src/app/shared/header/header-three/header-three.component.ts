@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { AuthService } from 'src/app/core/service/auth/auth.service';
 
 @Component({
   selector: 'app-header-three',
@@ -13,10 +14,16 @@ export class HeaderThreeComponent implements OnInit {
   @Input() sticky: boolean = false; // Default false
   
   public stick: boolean = false;
-
-  constructor() { }
+  isAdmin = false
+  isAuthenticated = false
+  constructor(private authS: AuthService) { }
 
   ngOnInit(): void {
+    this.authS.isAuthenticated.subscribe(val => this.isAuthenticated = val)
+    const userType = this.authS.currentUser().userType.filter(type => type.title.toLowerCase() === 'admin')
+    console.log( this.authS.currentUser())
+    this.isAdmin = userType.length > 0 ? true: false
+    console.log( userType)
   }
 
   // @HostListener Decorator

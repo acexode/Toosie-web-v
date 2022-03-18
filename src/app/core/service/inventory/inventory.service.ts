@@ -1,5 +1,5 @@
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
-import { roleEndpoints, inventoryEndpoints } from './../../config/endpoints';
+import { roleEndpoints, inventoryEndpoints, miscEndpoint } from './../../config/endpoints';
 import { RequestService } from './../../request/request.service';
 import { Injectable } from '@angular/core';
 import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
@@ -59,6 +59,9 @@ export class InventoryService {
   saveCardOrder(obj){
     return this.reqS.post(inventoryEndpoints.saveCardOrder, obj);
   }
+  uploadMedia(formData): Observable<any> {
+    return this.reqS.post(miscEndpoint.mediaUpload,formData);
+  }
   saveTokenOrder(obj){
     return this.reqS.post(inventoryEndpoints.saveTokenOrder, obj);
   }
@@ -78,6 +81,12 @@ export class InventoryService {
         .replace(/-+/g, '-'); // collapse dashes
 
     return str;
+}
+  createInventory(inv: any){
+    return this.reqS.post(inventoryEndpoints.createInventory, inv)
+  }
+  createCategory(cat: any){
+    return this.reqS.post(inventoryEndpoints.createCategory, cat)
 }
 
 }

@@ -24,16 +24,23 @@
                   <i class="fa fa-user" aria-hidden="true"></i> My Account
                   <ul class="onhover-show-div">
                     <li>
-                      <a data-lng="en">
+                      <a [routerLink]="['/pages/login']" data-lng="en">
                         Login
                       </a>
                     </li>
-                    <li>
+                    <li *ngIf="isAuthenticated">
                       <a data-lng="es">
                         Logout
                       </a>
                     </li>
+                   
                   </ul>
+                </li>
+                <li *ngIf="isAdmin" class="mobile-wishlist">
+                  <a [routerLink]="['/shop/wishlist']">Go to Dashboard</a>
+                </li>
+                <li *ngIf="!isAuthenticated" class="mobile-wishlist">
+                  <a [routerLink]="['/pages/register']">Sign Up</a>
                 </li>
               </ul>
             </div>
