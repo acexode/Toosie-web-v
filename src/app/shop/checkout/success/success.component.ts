@@ -10,7 +10,7 @@ import { ProductService } from '../../../shared/services/product.service';
 })
 export class SuccessComponent implements OnInit, AfterViewInit{
 
-  public orderDetails : Order = {};
+  public orderDetails : any = {};
 
   constructor(public productService: ProductService,
     private orderService: OrderService) { }

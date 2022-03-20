@@ -15,15 +15,8 @@ import { GalleryModule } from '@ks89/angular-modal-gallery';
 import 'hammerjs';
 import 'mousetrap';
 
-import { DropzoneModule } from 'ngx-dropzone-wrapper';
-import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
-import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
-import { miscEndpoint } from 'src/app/core/config/endpoints';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
-const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
-  maxFilesize: 50,
-  url: miscEndpoint.mediaUpload,
-};
 
 
 
@@ -37,14 +30,11 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     ProductsRoutingModule,
     Ng2SmartTableModule,
     NgbModule,
-    DropzoneModule,
-    GalleryModule.forRoot()
+    GalleryModule.forRoot(),
+    NgxDropzoneModule
   ],
   providers: [
-    {
-      provide: DROPZONE_CONFIG,
-      useValue: DEFAULT_DROPZONE_CONFIG
-    },
+
     NgbActiveModal
   ]
 })

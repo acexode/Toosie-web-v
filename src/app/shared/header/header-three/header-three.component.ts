@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/core/service/auth/auth.service';
 export class HeaderThreeComponent implements OnInit {
 
   @Input() class: string = 'header-2';
-  @Input() themeLogo: string = 'assets/images/icon/toosie-resized.png'; // Default Logo
+  @Input() themeLogo: string = '/assets/images/icon/toosie-resized.png'; // Default Logo
   @Input() topbar: boolean = true; // Default True
   @Input() sticky: boolean = false; // Default false
   
@@ -19,6 +19,7 @@ export class HeaderThreeComponent implements OnInit {
   constructor(private authS: AuthService) { }
 
   ngOnInit(): void {
+   
     this.authS.isAuthenticated.subscribe(val => this.isAuthenticated = val)
     const userType = this.authS.currentUser().userType.filter(type => type.title.toLowerCase() === 'admin')
     console.log( this.authS.currentUser())

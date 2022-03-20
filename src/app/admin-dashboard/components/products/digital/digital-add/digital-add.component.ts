@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { miscEndpoint } from './../../../../../core/config/endpoints';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -17,6 +18,7 @@ export class DigitalAddComponent implements OnInit {
   max: any = 0; 
   productPage = true
   productForm: FormGroup;
+  editProduct: any = {}
   hide = true;
   loading = false;
   files: File[] = [];
@@ -28,13 +30,18 @@ export class DigitalAddComponent implements OnInit {
     errorReset: null,
     cancelReset: null
   };
-  constructor(private invS: InventoryService, private fb: FormBuilder) {
+  constructor(private invS: InventoryService, private fb: FormBuilder, private route: ActivatedRoute) {
     // Dropzone.autoDiscover = false;
     this.productForm = this.fb.group({
       category: ['', [Validators.required]],
       title: ['', [Validators.required] ],
       description: ['', [Validators.required ]],
-      actualPrice: ['', [Validators.required ]],
+      // shortSummary: ['', [Validators.required ]],
+      enabled: [false, [Validators.required ]],
+      isSpecial: [false, [Validators.required ]],
+      isTrending: [false, [Validators.required ]],
+      stock: [0, [Validators.required ]],
+      actualPrice: [0, [Validators.required ]],
       discountPercent: [0, [Validators.required, ]],
       tags: ['', [Validators.required, ]],
       brand: ['', [Validators.required, ]],
@@ -43,46 +50,54 @@ export class DigitalAddComponent implements OnInit {
 
   
 
-  public onUploadInit(args: any): void { }
-
-  public onUploadError(args: any): void { }
-
-  public onUploadSuccess(args: any): void {
-    console.log(args)
-   }
-
+  onSelect(event) {
+    console.log(event);
+    this.files.push(...event.addedFiles);
+  }
+  
+  onRemove(event) {
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
+  }
   ngOnInit() {
-    this.invS.allCategories().subscribe((e:any) =>{
-      this.categories = e.inventoryCategory
-      const baby = this.categories[0]
-      console.log(e)
-      this.invS.inventoryByCategory(baby.id).subscribe((inv:any) =>{
-        console.log(inv)
-        this.products = inv.inventory.map(e =>{
-          return {
-            ...e,
-            img: `<img src=${e?.resourceImages[0]} class='imgTable'>`
-          }
+    const catId = this.route.snapshot.params.id
+    console.log(this.route.snapshot.params.id)
+    if(catId){
+      this.invS.singleInventory(catId).subscribe((e: any) =>{
+        console.log(e)
+        const product = e.data
+        this.editProduct = e.data
+        this.productForm.patchValue({
+          ...product
         })
       })
+    }
+    this.invS.allCategories().subscribe((e:any) =>{
+      this.categories = e.data
+      const baby = this.categories[0]
     })
   }
   saveProduct(){
     this.loading = true
     var data = new FormData();
-    data.append('category', '60c2269a3c3097745554235f');
-    data.append('title', this.title?.value);
-    data.append('description', this.description?.value);
-    data.append('actualPrice', this.actualPrice?.value);
-    data.append('discountPercent', '0');
-    data.append('images', JSON.stringify(this.files));
-    data.append('tags', this.tags?.value);
-    data.append('brand', this.brand?.value);
-    this.invS.createInventory(data).subscribe(inv =>{
-      console.log(inv)
-      this.loading = false;
-      this.files = []
-      this.productForm.reset()
+    for (let i = 0; i < this.files.length; i++) {
+      data.append('upload', this.files[i], this.files[i].name)
+    }
+    ;
+    this.invS.uploadMedia(data).subscribe(inv =>{
+      const obj = {
+        ...this.productForm.value,
+        resourceImages: inv.images,
+        tags: this.tags.value.split(","),
+        actualPrice: parseInt(this.actualPrice.value,10),
+        stock: parseInt(this.stock.value,10)
+      }
+      this.invS.createInventory(obj).subscribe(res =>{
+        console.log(res)
+        this.loading = false;
+        this.files = []
+        this.productForm.reset()
+      })
     })
   }
   get title() {
@@ -108,6 +123,9 @@ export class DigitalAddComponent implements OnInit {
   }
   get brand() {
     return this.productForm.get('brand');
+  }
+  get stock() {
+    return this.productForm.get('stock');
   }
 
 }

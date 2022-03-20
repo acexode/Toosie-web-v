@@ -15,7 +15,7 @@ import { SearchComponent } from './search/search.component';
 
 import { OrderSuccessComponent } from './order-success/order-success.component';
 import { CompareOneComponent } from './compare/compare-one/compare-one.component';
-import { CollectionComponent } from './collection/collection.component';
+
 
 import { ErrorComponent } from './error/error.component';
 import { BlogDetailsComponent } from './blog/blog-details/blog-details.component';
@@ -72,10 +72,6 @@ const routes: Routes = [
   { 
     path: 'compare/one', 
     component: CompareOneComponent 
-  },
-  { 
-    path: 'collection', 
-    component: CollectionComponent 
   },
   { 
     path: '404', 

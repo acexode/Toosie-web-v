@@ -1,3 +1,6 @@
+import { Router } from '@angular/router';
+import { locationList } from './locations';
+import { AuthService } from './../../core/service/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -17,26 +20,34 @@ export class CheckoutComponent implements OnInit {
   public checkoutForm:  FormGroup;
   public products: Product[] = [];
   public payPalConfig ? : IPayPalConfig;
-  public payment: string = 'Stripe';
+  public payment: string = 'POD';
   public amount:  any;
-
+  public user: any
+  allLocations = locationList;
   constructor(private fb: FormBuilder,
     public productService: ProductService,
+    public authS: AuthService,
+    public router: Router,
     private orderService: OrderService) { 
     this.checkoutForm = this.fb.group({
-      firstname: ['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      lastname: ['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      fullName: ['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
       phone: ['', [Validators.required, Validators.pattern('[0-9]+')]],
       email: ['', [Validators.required, Validators.email]],
       address: ['', [Validators.required, Validators.maxLength(50)]],
-      country: ['', Validators.required],
-      town: ['', Validators.required],
+      city: ['', Validators.required],
       state: ['', Validators.required],
       postalcode: ['', Validators.required]
     })
   }
 
   ngOnInit(): void {
+    console.log(this.authS.currentUser())
+    this.user = this.authS.currentUser()
+    this.checkoutForm.patchValue({
+      fullName: this.user.fullName,
+      email: this.user.email,
+      phone: this.user.phone
+    })
     this.productService.cartItems.subscribe(response => this.products = response);
     this.getTotal.subscribe(amount => this.amount = amount);
     this.initConfig();
@@ -44,6 +55,15 @@ export class CheckoutComponent implements OnInit {
 
   public get getTotal(): Observable<number> {
     return this.productService.cartTotalAmount();
+  }
+
+  makePayment(){
+    const values = {
+      ...this.checkoutForm.value,
+      paymentMethod: this.payment.toLowerCase()
+    }
+    this.orderService.createOrder(this.products, this.checkoutForm.value, this.user._id, this.amount )
+    this.router.navigate(['shop/checkout/success/1'])
   }
 
   // Stripe Payment Gateway
@@ -59,7 +79,7 @@ export class CheckoutComponent implements OnInit {
     });
     handler.open({
       name: 'Toosie',
-      description: 'Online Fashion Store',
+      description: 'Online Pharmacy Store',
       amount: this.amount * 100
     }) 
   }

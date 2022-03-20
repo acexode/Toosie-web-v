@@ -16,7 +16,7 @@ const routes: Routes = [
           title: "Category",
           breadcrumb: "Category"
         }
-      }
+      },
     ]
   }
 ];

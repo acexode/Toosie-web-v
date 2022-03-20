@@ -1,5 +1,6 @@
 <!-- header start -->
-<header class="sticky" [ngClass]="class" [class.fixed]="stick && sticky">
+<!-- [class.fixed]="stick && sticky" -->
+<header class="sticky" [ngClass]="class" >
     <div class="mobile-fix-option"></div>
     <div class="top-header" *ngIf="topbar">
       <div class="container">
@@ -37,7 +38,7 @@
                   </ul>
                 </li>
                 <li *ngIf="isAdmin" class="mobile-wishlist">
-                  <a [routerLink]="['/shop/wishlist']">Go to Dashboard</a>
+                  <a [routerLink]="['/dashboard/main']">Go to Dashboard</a>
                 </li>
                 <li *ngIf="!isAuthenticated" class="mobile-wishlist">
                   <a [routerLink]="['/pages/register']">Sign Up</a>

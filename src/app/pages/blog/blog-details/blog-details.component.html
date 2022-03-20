@@ -4,14 +4,15 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 blog-detail mb-5">
-                <img style="height: 300px" [src]="blog.blogImage" class="img-fluid" alt=""/>
+                <img style="height: 300px; width: 100%; object-fit: cover;" [src]="blog.blogImage" class="img-fluid" alt=""/>
                 <h3>{{blog.blogTitle}}</h3>
                 <ul class="post-social">
                     <li>{{blog.createdAt | date}} </li>
-                    <li>Posted By : {{blog.blogAuthor.email}} </li>
+                    <li *ngIf="blog?.blogAuthor">Posted By : {{blog.blogAuthor.fullName}} </li>
+                    <li *ngIf="!blog?.blogAuthor">Posted By : Anonymous </li>
 
                 </ul>
-                <p>{{blog.blogContent}}</p>
+                <p [innerHTML]="blog.blogContent">{{blog.blogContent}}</p>
                 </div>
         </div>
         <hr>
@@ -21,7 +22,7 @@
                 <img style="height: 200px;" [src]="blog.blogImage" class="img-fluid" alt=""/>
                 <div class="row">
                     <div class="col-12">
-                        {{blog.blogContent | slice: 0:200}}
+                        <p [innerHTML]="blog.blogContent | slice: 0:200"></p>
                     </div>
                 </div>
             </div>

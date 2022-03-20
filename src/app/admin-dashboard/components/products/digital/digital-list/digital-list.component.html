@@ -8,7 +8,10 @@
                 <div class="card-body">
                     <div id="batchDelete" class="custom-datatable">
                         <div class="table-responsive">
-                            <ng2-smart-table [settings]="settings" [source]="products"></ng2-smart-table>
+                            <ng2-smart-table 
+                            [settings]="settings"
+                            (deleteConfirm)="onDeleteConfirm($event)"
+                            (custom)="onCustom($event)" [source]="products"></ng2-smart-table>
                         </div>
                     </div>
                 </div>

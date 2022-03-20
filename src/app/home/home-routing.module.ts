@@ -1,3 +1,4 @@
+import { BlogDetailsComponent } from './../pages/blog/blog-details/blog-details.component';
 import { BlogNoSidebarComponent } from './../pages/blog/blog-no-sidebar/blog-no-sidebar.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: 'blog',
     component: BlogNoSidebarComponent
+  },
+  {
+    path: 'blog/details/:id',
+    component: BlogDetailsComponent
   },
   
 ];

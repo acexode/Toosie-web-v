@@ -20,13 +20,13 @@ import { SearchComponent } from './search/search.component';
 import { OrderSuccessComponent } from './order-success/order-success.component';
 import { CompareOneComponent } from './compare/compare-one/compare-one.component';
 
-import { CollectionComponent } from './collection/collection.component';
 
 import { ErrorComponent } from './error/error.component';
 
 
 // Blog Components
 import { BlogDetailsComponent } from './blog/blog-details/blog-details.component';
+
 
 
 @NgModule({
@@ -45,10 +45,11 @@ import { BlogDetailsComponent } from './blog/blog-details/blog-details.component
     OrderSuccessComponent,
     CompareOneComponent,
     BlogNoSidebarComponent,
-    CollectionComponent,
+
 
     ErrorComponent,
     BlogDetailsComponent,
+
 
   ],
   imports: [

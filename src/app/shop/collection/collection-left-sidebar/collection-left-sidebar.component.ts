@@ -74,13 +74,15 @@ export class CollectionLeftSidebarComponent implements OnInit {
   ngOnInit(): void {
     
     this.route.params.subscribe(route =>{
-      const catId = route.slug.split("-")[0]
-      console.log(catId)
+      const catId = route.slug
+      console.log(route)
+      this.loadInventory(catId)
       this.invS.categoryStore.subscribe((e: any) =>{
         console.log(e)
         e.forEach(cat => {
            let split = cat?.category.split(" ")[0]
-           if(split.toLowerCase() === catId){
+           let catid = catId.split("-")[0]
+           if(split.toLowerCase() === catid){
              console.log(cat)
              this.currentCategory = cat
              this.loadInventory(cat._id)
@@ -88,8 +90,6 @@ export class CollectionLeftSidebarComponent implements OnInit {
              console.log(this.paginate)
            }
          });
-        // let split = e.category.split(" ")[0]
-        // console.log(split)
       })
     })
   }
@@ -105,9 +105,9 @@ export class CollectionLeftSidebarComponent implements OnInit {
     this.invS.inventoryByCategory(id).subscribe((e: any) =>{
       console.log(e);
       // this.loading = false;
-      this.currentCategoryProduct = e.inventory;
-      this.paginate = this.productService.getPager(e.inventory.length, +this.pageNo);     // get paginate object from service
-      this.products = e.inventory
+      this.currentCategoryProduct = e.data;
+      this.paginate = this.productService.getPager(e.data.length, +this.pageNo);     // get paginate object from service
+      this.products = e.data
       console.log(this.paginate)
       console.log(this.products)
     });

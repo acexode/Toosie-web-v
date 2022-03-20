@@ -1,5 +1,5 @@
-import { BehaviorSubject } from 'rxjs';
-import { blogEndpoints } from './../../config/endpoints';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { blogEndpoints, baseEndpoints, miscEndpoint } from './../../config/endpoints';
 import { Injectable } from '@angular/core';
 import { RequestService } from '../../request/request.service';
 
@@ -14,9 +14,21 @@ export class BlogService {
   }
 
   blogListing(){
-    this.reqS.get(blogEndpoints.blogListing).subscribe((e: any) =>{
+    this.reqS.get(baseEndpoints.blog).subscribe((e: any) =>{
       console.log(e);
-      this.blogStore.next(e.blogs);
+      this.blogStore.next(e.data);
+    });
+  }
+  createBlog(data){
+    return this.reqS.post(baseEndpoints.blog, data)
+  }
+  uploadMedia(formData): Observable<any> {
+    return this.reqS.post(miscEndpoint.mediaUpload, formData);
+  }
+  deleteBlog(id){
+    return this.reqS.delete(baseEndpoints.blog + '/' + id).subscribe((e: any) =>{
+      console.log(e);
+      this.blogListing();
     });
   }
 }

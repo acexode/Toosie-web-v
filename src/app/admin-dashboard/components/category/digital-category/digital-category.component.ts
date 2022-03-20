@@ -13,16 +13,26 @@ export class DigitalCategoryComponent implements OnInit {
   public closeResult: string;
   public digital_categories = []
   public categories = []
-  productForm: FormGroup;
+  categoryForm: FormGroup;
   hide = true;
   loading = false;
   files: File[] = [];
 
   constructor(private modalService: NgbModal, private invS: InventoryService, private fb: FormBuilder) {
     this.digital_categories = digitalCategoryDB.digital_category;
-    this.productForm = this.fb.group({
-      title: ['', [Validators.required]],
+    this.categoryForm = this.fb.group({
+      category: ['', [Validators.required]],
     });
+    this.loadCategory()
+  }
+  onSelect(event) {
+    console.log(event);
+    this.files.push(...event.addedFiles);
+  }
+  
+  onRemove(event) {
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
   }
 
   open(content) {
@@ -45,50 +55,106 @@ export class DigitalCategoryComponent implements OnInit {
 
   public settings = {
     actions: {
+      edit: true,
+      add: false,
       position: 'right'
+  },
+    delete: {
+      confirmDelete: true,
+
+      deleteButtonContent: 'Delete data',
+      saveButtonContent: 'save',
+      cancelButtonContent: 'cancel'
+    },
+    edit: {
+      editButtonContent: `'<i class="fas fa-pencil-alt fa-fw"></i>'`,
+      saveButtonContent: '<i class="fas fa-check fa-fw"></i>',
+      cancelButtonContent: '<i class="fas fa-times fa-fw"></i>',
+      confirmSave: true
     },
     columns: {
       categoryImage: {
         title: 'Image',
         type: 'html',
       },
-      categoryTitle: {
+      category: {
         title: 'Name'
       }
     },
   };
 
   ngOnInit() {
+   this.loadCategory
+  }
+  loadCategory(){
     this.invS.allCategories().subscribe((e:any) =>{
-      this.categories = e.inventoryCategory
+      console.log(e.data)
+      this.categories = e.data.map(e =>{
+        return {
+          ...e,
+          categoryImage: `<img src=${e?.categoryImage} class='imgTable'>`
+        }
+      })
     })
   }
 
-  saveProduct(){
+  saveCategory(){
     this.loading = true
     var data = new FormData();
     // data.append('category', this.title?.value);
-    data.append('images', JSON.stringify(this.files));
+    data.append('upload', this.files[0]);
     this.invS.uploadMedia(data).subscribe(res =>{
       const obj = {
-        category: this.title?.value,
-        categoryImage: res?.images
+        category: this.category?.value,
+        categoryImage: res?.images[0]
       }
       this.invS.createCategory(obj).subscribe(inv =>{
         console.log(inv)
         this.loading = false;
         this.files = []
-        this.productForm.reset()
+        this.loadCategory()
+        this.modalService.dismissAll()
+        this.categoryForm.reset()
       })
     })
   }
+  onDeleteConfirm(event) {
+    console.log("Delete Event In Console")
+    console.log(event);
+    if (window.confirm('Are you sure you want to delete?')) {
+      this.invS.deleteCategory(event.data._id).subscribe(e =>{
+        event.confirm.resolve();
+        console.log(e)
 
-  get title() {
-    return this.productForm.get('title');
+      })
+    } else {
+      event.confirm.reject();
+    }
+  }
+  onEditConfirm(event) {
+    if (window.confirm('Are you sure you want to update?')) {
+      console.log(event)
+      const data = event.data
+      const obj = {
+        category: data.category,
+        categoryImage: data.categoryImage
+      }
+      this.invS.updateCategory(event.data._id, obj).subscribe(e =>{
+        event.confirm.resolve();
+        console.log(e)
+
+      })
+    } else {
+      event.confirm.reject();
+    }
+  }
+
+  get category() {
+    return this.categoryForm.get('category');
   }
  
   get brand() {
-    return this.productForm.get('brand');
+    return this.categoryForm.get('brand');
   }
 
 }

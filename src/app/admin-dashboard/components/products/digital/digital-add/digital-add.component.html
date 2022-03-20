@@ -22,9 +22,9 @@
                         </div> -->
                         <div class="form-group">
                             <label class="col-form-label"><span>*</span> Categories</label>
-                            <select *ngFor="let i of categories" class="custom-select" required="">
+                            <select formControlName="category"  class="custom-select" required="">
                                 <option value="">--Select--</option>
-                                <option [value]="i._id">{{i.category}}</option>
+                                <option *ngFor="let i of categories" [value]="i._id">{{i.category}}</option>
 
                             </select>
                         </div>
@@ -40,6 +40,13 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="validationCustom02" class="col-form-label"><span>*</span> Total Quantity</label>
+                            <input class="form-control" id="validationCustom02" type="text" formControlName="stock">
+                            <div *ngIf="(stock?.dirty || stock?.touched) && stock?.errors" class="errors">
+                                <span *ngIf="stock?.errors?.required">Quanity is required</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label>Discount (%)</label>
                             <input type="text" class="form-control" placeholder="discountPercent" formControlName="discountPercent">
                             <div *ngIf="(discountPercent?.dirty || discountPercent?.touched) && discountPercent?.errors" class="errors">
@@ -50,26 +57,49 @@
                         <div class="form-group">
                             <label class="col-form-label"><span>*</span> Status</label>
                             <div class="m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated">
-                                <label class="d-block" for="edo-ani">
-                                    <input class="radio_animated" id="edo-ani" type="radio" name="rdo-ani">
+                                <label class="d-block" for="enabled">
+                                    <input formControlName="enabled" [value]="true" class="radio_animated" type="radio">
                                     Enable
                                 </label>
-                                <label class="d-block" for="edo-ani1">
-                                    <input class="radio_animated" id="edo-ani1" type="radio" name="rdo-ani">
+                                <label class="d-block" for="enabled">
+                                    <input formControlName="enabled" [value]="false" class="radio_animated" type="radio">
                                     Disable
                                 </label>
                             </div>
                         </div>
-                        <label class="col-form-label pt-0"> Product Upload</label>
-                        <div class="card-body dropzone-custom p-0">
-                            <div class="dropzone dropzone-primary" [dropzone]="config1" (error)="onUploadError($event)"
-                                (success)="onUploadSuccess($event)">
-                                <div class="dz-message needsclick">
-                                    <i class="fa fa-cloud-upload"></i>
-                                    <h4 class="mb-0 f-w-600">Drop files here or click to upload.</h4>
-                                </div>
+                        <div class="form-group">
+                            <label class="col-form-label"><span>*</span>Show in Special</label>
+                            <div class="m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated">
+                                <label class="d-block" for="enabled">
+                                    <input formControlName="isSpecial" [value]="true" class="radio_animated" type="radio">
+                                    Yes
+                                </label>
+                                <label class="d-block" for="enabled">
+                                    <input formControlName="isSpecial" [value]="false" class="radio_animated" type="radio">
+                                    No
+                                </label>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-form-label"><span>*</span>Show in Trending</label>
+                            <div class="m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated">
+                                <label class="d-block" for="enabled">
+                                    <input formControlName="isTrending" [value]="true" class="radio_animated" type="radio">
+                                    Yes
+                                </label>
+                                <label class="d-block" for="enabled">
+                                    <input formControlName="isTrending" [value]="false" class="radio_animated" type="radio">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div *ngFor="let i of editProduct.resourceImages" class="col-3">
+                                <img [src]="i" class="img-thumbnail" alt="...">
+
+                            </div>
+                        </div>
+                      
                     </div>
                 </div>
             </div>
@@ -77,15 +107,31 @@
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-header">
-                    <h5>Add Description</h5>
+                    <h5>Add Description and Images</h5>
                 </div>
                 <div class="card-body">
                     <div class="digital-add needs-validation">
+
                         <div class="form-group mb-0">
+                            <label class="col-form-label "> Description</label>
                             <div class="description-sm">
                                 <textarea class="form-control" formControlName="description" language="en"></textarea>
                             </div>
                         </div>
+                    </div>
+                    <label class="col-form-label "> Product Upload</label>
+                    <div class="card-body dropzone-custom p-0">
+                        <ngx-dropzone (change)="onSelect($event)">
+                            <div class="dropzone dropzone-primary" style="border: none;">
+                            <div class="dz-message needsclick">
+                                <i class="fa fa-cloud-upload"></i>
+                                <h4 class="mb-0 f-w-600">Drop Prescription here or click to upload.</h4>
+                            </div>
+                        </div>
+                            <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                                <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                            </ngx-dropzone-preview>
+                        </ngx-dropzone>
                     </div>
                 </div>
             </div>
@@ -105,7 +151,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">Brand</label>
-                            <input class="form-control" type="text" placeholder="brand" formControlName="brand">>
+                            <input class="form-control" type="text" placeholder="brand" formControlName="brand">
                             <div *ngIf="(brand?.dirty || brand?.touched) && brand?.errors" class="errors">
                                 <span *ngIf="brand?.errors?.required">brand is required</span>
                                 <span *ngIf="brand?.errors?.brand">brand is invalid</span>

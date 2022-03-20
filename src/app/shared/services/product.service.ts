@@ -17,7 +17,7 @@ const state = {
 })
 export class ProductService {
 
-  public Currency = { name: 'Dollar', currency: 'USD', price: 1 } // Default Currency
+  public Currency = { name: 'Naira', currency: '₦', price: 1 } // Default Currency
   public OpenCart: boolean = false;
   public Products
 
@@ -200,7 +200,7 @@ export class ProductService {
   public cartTotalAmount(): Observable<number> {
     return this.cartItems.pipe(map((product) => {
       return product.reduce((prev, curr: any) => {
-        let price = curr.currentPrice;
+        let price = (curr.actualPrice) - (curr.actualPrice * (curr.discountPercent/ 100));
         return (prev + price * curr.quantity);
       }, 0);
     }));

@@ -1,9 +1,9 @@
+import { PrescriptionComponent } from './prescription/prescription.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ShopComponent } from './shop/shop.component';
 import { PagesComponent } from './pages/pages.component';
-import { ElementsComponent } from './elements/elements.component';
 
 const routes: Routes = [
   {
@@ -30,9 +30,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule) 
   },
   { 
-    path: 'elements', 
-    component: ElementsComponent,
-    loadChildren: () => import('./elements/elements.module').then(m => m.ElementsModule) },
+    path: 'prescription',
+    component: PrescriptionComponent,
+    loadChildren: () => import('./prescription/prescription.module').then(m => m.PrescriptionModule) 
+  },
   {
     path: '**', // Navigate to Home Page if not found any page
     redirectTo: 'home/main',

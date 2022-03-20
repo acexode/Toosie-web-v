@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { InventoryService } from 'src/app/core/service/inventory/inventory.service';
 
 @Component({
   selector: 'app-checkout',
@@ -6,10 +8,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
-
-  constructor() { }
+  public orderForm: FormGroup
+  constructor(private invS: InventoryService, private fb: FormBuilder) {
+    // Dropzone.autoDiscover = false;
+    this.orderForm = this.fb.group({
+      address: ['', [Validators.required, ]],
+      state: ['', [Validators.required, ]],
+      postalCode: ['', [Validators.required, ]],
+    });
+  }
 
   ngOnInit(): void {
+
   }
 
 }

@@ -32,9 +32,9 @@ export class ProductLeftSidebarComponent implements OnInit {
           if(!product) { // When product is empty redirect 404
               this.router.navigateByUrl('/pages/404', {skipLocationChange: true});
           } else {
-              this.product = product.inventory
-              this.invS.inventoryByCategory(this.product.category._id).subscribe((e: any) =>{
-                this.relatedProduct = e.inventory
+              this.product = product.data
+              this.invS.inventoryByCategory(this.product.category).subscribe((e: any) =>{
+                this.relatedProduct = e.data
               })
           }
         })

@@ -28,6 +28,20 @@ export const content: Routes = [
       breadcrumb: "Category"
     }
   },
+  {
+    path: 'users',
+    loadChildren: () => import('../../components/users/users.module').then(m => m.UsersModule),
+    data: {
+      breadcrumb: "Category"
+    }
+  },
+  {
+    path: 'blog',
+    loadChildren: () => import('../../components/blog/blog.module').then(m => m.AdminBlogModule),
+    data: {
+      breadcrumb: "Category"
+    }
+  },
  
   
   

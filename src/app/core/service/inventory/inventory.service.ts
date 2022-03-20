@@ -1,5 +1,5 @@
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
-import { roleEndpoints, inventoryEndpoints, miscEndpoint } from './../../config/endpoints';
+import { roleEndpoints, inventoryEndpoints, miscEndpoint, baseEndpoints } from './../../config/endpoints';
 import { RequestService } from './../../request/request.service';
 import { Injectable } from '@angular/core';
 import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
@@ -22,23 +22,24 @@ export class InventoryService {
     return this.reqS.get(inventoryEndpoints.brands).pipe(map((data: any) => data.inventoryBrands));
   }
   multipleRequest(){
-    const popular = this.reqS.get(inventoryEndpoints.popular +'/1');
-    const latest = this.reqS.get(inventoryEndpoints.latest +'/1');
-    const categories = this.reqS.get(inventoryEndpoints.allCategories);
+    const popular = this.reqS.get(baseEndpoints.inventory + "?isSpecial=" + true );
+    const latest = this.reqS.get(baseEndpoints.inventory + "?isTrending=" + true);
+    const categories = this.reqS.get(baseEndpoints.category);
     forkJoin([popular, latest, categories]).subscribe((results: any) =>{
-      this.popularStore.next(results[0].inventory);
-      this.latestStore.next(results[1].inventory);
-      this.categoryStore.next(results[2].inventoryCategory);
+      console.log(results)
+      this.popularStore.next(results[0].data);
+      this.latestStore.next(results[1].data);
+      this.categoryStore.next(results[2].data);
     });
   }
   allCategories(){
-    return this.reqS.get(inventoryEndpoints.allCategories);
+    return this.reqS.get(baseEndpoints.category);
   }
   inventoryByCategory(id){
-    return this.reqS.get(inventoryEndpoints.inventoryByCategory + id + '/1');
+    return this.reqS.get(baseEndpoints.inventory +'?category=' + id);
   }
   singleInventory(id){
-    return this.reqS.get(inventoryEndpoints.single + id);
+    return this.reqS.get(baseEndpoints.inventory + '/' + id);
   }
   myOrders(){
     return this.reqS.get(inventoryEndpoints.myOrders + '1');
@@ -83,10 +84,25 @@ export class InventoryService {
     return str;
 }
   createInventory(inv: any){
-    return this.reqS.post(inventoryEndpoints.createInventory, inv)
+    return this.reqS.post(baseEndpoints.inventory, inv)
+  }
+  deleteInventory(id: any){
+    return this.reqS.delete(baseEndpoints.inventory + '/' + id)
+  }
+  updateInventory(id: any, obj){
+    return this.reqS.put(baseEndpoints.inventory + '/' + id, obj )
+  }
+  getInventory(){
+    return this.reqS.get(baseEndpoints.inventory)
   }
   createCategory(cat: any){
-    return this.reqS.post(inventoryEndpoints.createCategory, cat)
-}
+    return this.reqS.post(baseEndpoints.category, cat)
+  }
+  deleteCategory(id: any){
+    return this.reqS.delete(baseEndpoints.category + '/' + id)
+  }
+  updateCategory(id: any, obj){
+    return this.reqS.put(baseEndpoints.category + '/' + id, obj )
+  }
 
 }

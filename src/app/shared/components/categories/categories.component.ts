@@ -27,7 +27,7 @@ export class CategoriesComponent implements OnInit {
   loadCategory(){
     const catId = this.route.snapshot.params.slug
     this.inventoryS.allCategories().subscribe((e: any) =>{
-      this.categories = e.inventoryCategory;
+      this.categories = e.data;
       this.loadInventory(catId);
     });
   }

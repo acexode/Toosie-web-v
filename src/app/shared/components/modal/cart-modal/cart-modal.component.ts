@@ -1,3 +1,4 @@
+import { InventoryService } from 'src/app/core/service/inventory/inventory.service';
 import { Component, OnInit, OnDestroy, ViewChild, TemplateRef, Input, AfterViewInit,
   Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
@@ -12,7 +13,7 @@ import { Product } from "../../../classes/product";
 })
 export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Input() product: Product;
+  @Input() product: any;
   @Input() currency : any;
   
   @ViewChild("cartModal", { static: false }) CartModal: TemplateRef<any>;
@@ -23,7 +24,9 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
     private modalService: NgbModal,
-    private productService: ProductService) {
+    private productService: ProductService,
+    private invS: InventoryService
+    ) {
   }
 
   ngOnInit(): void {
@@ -33,7 +36,9 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async openModal(product) {
-    await this.productService.getProducts.subscribe(response => this.products = response);
+    console.log(product)
+    await this.invS.inventoryByCategory(product.category).subscribe((response: any) => this.products = response.data);
+    console.log(this.products)
     this.products = await this.products.filter(items => items.category == product.category && items.id != product.id);
     const status = await this.productService.addToCart(product);
     if(status) {

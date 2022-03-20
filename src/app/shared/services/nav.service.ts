@@ -54,9 +54,8 @@ export class NavService {
 		},
 		{
 			title: 'Prescription', type: 'sub', active: false, children: [
-				{ path: '/shop/collection/left/sidebar', title: 'upload prescription', type: 'link' },
-				{ path: '/shop/collection/right/sidebar', title: 'prescription history', type: 'link' },
-				{ path: '/shop/collection/no/sidebar', title: 'auto refill', type: 'link' }
+				{ path: '/prescription/upload-prescription', title: 'upload prescription', type: 'link' },
+				{ path: '/prescription/prescription-history', title: 'prescription history', type: 'link' },
 			]
 		},
 		{
@@ -88,9 +87,8 @@ export class NavService {
 		},
 		{
 			title: 'Prescription', type: 'sub', active: false, children: [
-				{ path: '/shop/collection/left/sidebar', title: 'upload prescription', type: 'link' },
-				{ path: '/shop/collection/right/sidebar', title: 'prescription history', type: 'link' },
-				{ path: '/shop/collection/no/sidebar', title: 'auto refill', type: 'link' }
+				{ path: '/prescription/upload-prescription', title: 'upload prescription', type: 'link' },
+				{ path: '/prescription/prescription-history', title: 'prescription history', type: 'link' },
 			]
 		},
 		{

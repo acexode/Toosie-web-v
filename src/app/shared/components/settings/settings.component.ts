@@ -28,9 +28,9 @@ export class SettingsComponent implements OnInit {
     currency: 'EUR',
     price: 0.90 // price of euro
   }, {
-    name: 'Rupees',
-    currency: 'INR',
-    price: 70.93 // price of inr
+    name: 'Naira',
+    currency: '₦',
+    price: 1 // price of naira
   }, {
     name: 'Pound',
     currency: 'GBP',

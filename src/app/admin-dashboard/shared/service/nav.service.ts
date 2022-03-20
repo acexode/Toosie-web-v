@@ -65,8 +65,8 @@ export class NavService {
 		},
 		{
 			title: 'Blogs', icon: 'clipboard', type: 'sub', active: false, children: [
-				{ path: '/blog/list-blog', title: 'List Blog', type: 'link' },
-				{ path: '/blog/create-blog', title: 'Create Blog', type: 'link' },
+				{ path: 'blog/blog-list', title: 'List Blog', type: 'link' },
+				{ path: 'blog/add-blog', title: 'Create Blog', type: 'link' },
 			]
 		},
 		{
@@ -75,18 +75,14 @@ export class NavService {
 		
 		{
 			title: 'Users', icon: 'user-plus', type: 'sub', active: false, children: [
-				{ path: '/users/list-user', title: 'User List', type: 'link' },
-				{ path: '/users/create-user', title: 'Create User', type: 'link' },
+				{ path: 'users/list-user', title: 'User List', type: 'link' },
+				{ path: 'users/create-user', title: 'Create User', type: 'link' },
 			]
 		},
 		{
 			title: 'Reports', path: '/reports', icon: 'bar-chart', type: 'link', active: false
 		},
-		{
-			title: 'Settings', icon: 'settings', type: 'sub', children: [
-				{ path: '/settings/profile', title: 'Profile', type: 'link' },
-			]
-		},
+	
 	]
 	// Array
 	items = new BehaviorSubject<Menu[]>(this.MENUITEMS);

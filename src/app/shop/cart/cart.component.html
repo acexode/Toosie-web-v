@@ -15,6 +15,7 @@
                         <th scope="col">image</th>
                         <th scope="col">product name</th>
                         <th scope="col">price</th>
+                        <th scope="col">Discount</th>
                         <th scope="col">quantity</th>
                         <th scope="col">action</th>
                         <th scope="col">total</th>
@@ -39,7 +40,7 @@
                                 </div>
                                 <div class="col-xs-3">
                                     <h2 class="td-color">
-                                        {{ product.currentPrice }}
+                                        {{ product.actualPrice }}
                                     </h2>
                                 </div>
                                 <div class="col-xs-3">
@@ -53,7 +54,12 @@
                         </td>
                         <td>
                             <h2>
-                                {{ product.currentPrice }}
+                                {{ product.actualPrice }}
+                            </h2>
+                        </td>
+                        <td>
+                            <h2>
+                                {{ product.discountPercent }} <span *ngIf="product.discountPercent > 0">%</span>
                             </h2>
                         </td>
                         <td>
@@ -80,7 +86,7 @@
                         </td>
                         <td>
                             <h2 class="td-color">
-                                {{ product.currentPrice  * product.quantity  }}
+                                {{ (product.actualPrice   - (product.actualPrice  * (product.discountPercent /100))) *  product.quantity  }}
                             </h2>
                         </td>
                     </tr>
