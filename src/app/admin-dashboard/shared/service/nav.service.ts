@@ -37,9 +37,9 @@ export class NavService {
 	}
 
 	MENUITEMS: Menu[] = [
-		{
-			path: '/dashboard/default', title: 'Dashboard', icon: 'home', type: 'link', badgeType: 'primary', active: false
-		},
+		// {
+		// 	path: '/dashboard/default', title: 'Dashboard', icon: 'home', type: 'link', badgeType: 'primary', active: false
+		// },
 		{
 			title: 'Products', icon: 'box', type: 'sub', active: false, children: [
 				{ path: 'products/product-list', title: 'Product List', type: 'link' },
@@ -54,7 +54,6 @@ export class NavService {
 		{
 			title: 'Sales', icon: 'dollar-sign', type: 'sub', active: false, children: [
 				{ path: 'sales/orders', title: 'Orders', type: 'link' },
-				{ path: 'sales/transactions', title: 'Transactions', type: 'link' },
 			]
 		},
 		{
@@ -76,12 +75,11 @@ export class NavService {
 		{
 			title: 'Users', icon: 'user-plus', type: 'sub', active: false, children: [
 				{ path: 'users/list-user', title: 'User List', type: 'link' },
-				{ path: 'users/create-user', title: 'Create User', type: 'link' },
 			]
 		},
-		{
-			title: 'Reports', path: '/reports', icon: 'bar-chart', type: 'link', active: false
-		},
+		// {
+		// 	title: 'Reports', path: '/reports', icon: 'bar-chart', type: 'link', active: false
+		// },
 	
 	]
 	// Array
