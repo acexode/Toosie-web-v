@@ -10,7 +10,7 @@ import { ForgetPasswordComponent } from './account/forget-password/forget-passwo
 import { ProfileComponent } from './account/profile/profile.component';
 import { ContactComponent } from './account/contact/contact.component';
 import { CheckoutComponent } from './account/checkout/checkout.component';
-import { AboutUsComponent } from './about-us/about-us.component';
+
 import { SearchComponent } from './search/search.component';
 
 import { OrderSuccessComponent } from './order-success/order-success.component';
@@ -56,10 +56,6 @@ const routes: Routes = [
   { 
     path: 'checkout', 
     component: CheckoutComponent 
-  },
-  { 
-    path: 'aboutus', 
-    component: AboutUsComponent 
   },
   { 
     path: 'search', 

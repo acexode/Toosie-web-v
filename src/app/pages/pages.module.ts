@@ -15,7 +15,6 @@ import { ForgetPasswordComponent } from './account/forget-password/forget-passwo
 import { ProfileComponent } from './account/profile/profile.component';
 import { ContactComponent } from './account/contact/contact.component';
 import { CheckoutComponent } from './account/checkout/checkout.component';
-import { AboutUsComponent } from './about-us/about-us.component';
 import { SearchComponent } from './search/search.component';
 import { OrderSuccessComponent } from './order-success/order-success.component';
 import { CompareOneComponent } from './compare/compare-one/compare-one.component';
@@ -40,7 +39,6 @@ import { BlogDetailsComponent } from './blog/blog-details/blog-details.component
     ProfileComponent,
     ContactComponent,
     CheckoutComponent,
-    AboutUsComponent,
     SearchComponent,
     OrderSuccessComponent,
     CompareOneComponent,
