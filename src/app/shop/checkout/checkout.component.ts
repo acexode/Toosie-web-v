@@ -49,7 +49,14 @@ export class CheckoutComponent implements OnInit {
       phone: this.user.phone
     })
     this.productService.cartItems.subscribe(response => this.products = response);
+    console.log(this.products)
     this.getTotal.subscribe(amount => this.amount = amount);
+    this.checkoutForm.get('city').valueChanges.subscribe(v =>{
+      this.getTotal.subscribe(amount => this.amount = amount);
+      this.amount += this.allLocations.filter(f => f.label === v)[0].value
+      console.log(v)
+      console.log(this.amount)
+    })
     this.initConfig();
   }
 
@@ -62,8 +69,9 @@ export class CheckoutComponent implements OnInit {
       ...this.checkoutForm.value,
       paymentMethod: this.payment.toLowerCase()
     }
-    this.orderService.createOrder(this.products, this.checkoutForm.value, this.user._id, this.amount )
-    this.router.navigate(['shop/checkout/success/1'])
+    console.log(this.products)
+    this.orderService.createOrder(this.products, values, this.user._id, this.amount )
+    // this.router.navigate(['shop/checkout/success/1'])
   }
 
   // Stripe Payment Gateway

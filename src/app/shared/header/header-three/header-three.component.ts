@@ -19,12 +19,10 @@ export class HeaderThreeComponent implements OnInit {
   constructor(private authS: AuthService) { }
 
   ngOnInit(): void {
-   
     this.authS.isAuthenticated.subscribe(val => this.isAuthenticated = val)
-    const userType = this.authS.currentUser().userType.filter(type => type.title.toLowerCase() === 'admin')
+    const userType = this.authS.currentUser().userType
     console.log( this.authS.currentUser())
-    this.isAdmin = userType.length > 0 ? true: false
-    console.log( userType)
+    this.isAdmin = userType.toLowerCase() === 'admin' ? true: false
   }
 
   // @HostListener Decorator

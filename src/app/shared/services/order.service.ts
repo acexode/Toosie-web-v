@@ -1,3 +1,4 @@
+import { locationList } from './../../shop/checkout/locations';
 import { baseEndpoints } from './../../core/config/endpoints';
 import { RequestService } from './../../core/request/request.service';
 import { Injectable } from '@angular/core';
@@ -26,19 +27,24 @@ export class OrderService {
 
   // Create order
   public createOrder(product: any, details: any, customerID, amount: any) {
+    const orderDetails = product.map(e => { return { product: e._id, quantity: e.quantity}})
+    const deliveryCost = locationList.filter(e => e.label === details.city )[0].value
     var item = {
         customerId: customerID,
         shipping: {
           city: details.city,
           state: details.state,
           address: details.address,
+          addressDeliveryCost: deliveryCost,
           postalCode: details.postalcode
         },
         products: product,
-        totalCost: amount
+        orderDetails: orderDetails,
+        totalCost: amount,
+        paymentMethod: details.paymentMethod
     };
     // state.checkoutItems = item;
-    // localStorage.setItem("checkoutItems", JSON.stringify(item));
+    // localStorage.setItem("checkoutItems", JSON.stringify(item)); 
     this.reqS.post(baseEndpoints.order, item).subscribe((e: any )=> {
       const paymentId = e.data.paymentId
       this.router.navigate(['/shop/checkout/success', paymentId]);
@@ -46,5 +52,11 @@ export class OrderService {
     })
     localStorage.removeItem("cartItems");
   }
-  
+
+  getAllOrders(){
+    return this.reqS.get(baseEndpoints.order)
+  }
+  getTransaction(id){
+    return this.reqS.get(baseEndpoints.order + "?paymentId=" + id)
+  }
 }

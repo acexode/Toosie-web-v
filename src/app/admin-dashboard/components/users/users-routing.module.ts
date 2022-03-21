@@ -16,11 +16,11 @@ const routes: Routes = [
         }
       },
       {
-        path: 'create-user',
+        path: 'edit-user/:id',
         component: CreateUserComponent,
         data: {
-          title: "Create User",
-          breadcrumb: "Create User"
+          title: "Edit User",
+          breadcrumb: "Edit User"
         }
       }
     ]

@@ -14,7 +14,8 @@ import { TransactionsComponent } from './transactions/transactions.component';
     CommonModule,
     SalesRoutingModule,
     Ng2SmartTableModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    Ng2SmartTableModule,
   ]
 })
 export class SalesModule { }

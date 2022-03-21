@@ -1,4 +1,4 @@
-import { authEndpoints } from './../../config/endpoints';
+import { authEndpoints, baseEndpoints } from './../../config/endpoints';
 import { RequestService } from './../../request/request.service';
 import { Injectable } from '@angular/core';
 import { map, tap, switchMap } from 'rxjs/operators';
@@ -36,9 +36,10 @@ export class AuthService {
 
   login(credentials: {email: any; password: any}): Observable<any> {
     return this.reqS.post(authEndpoints.login, credentials).pipe(
-      tap(data => {
-        localStorage.setItem(CURRENT_USER, JSON.stringify(data.user))
-        localStorage.setItem(TOKEN_KEY,  data.token)
+      tap(res => {
+        console.log(res.data)
+        localStorage.setItem(CURRENT_USER, JSON.stringify(res.data))
+        localStorage.setItem(TOKEN_KEY,  res.token)
         this.isAuthenticated.next(true);
 
       })
@@ -46,21 +47,27 @@ export class AuthService {
   }
   signup(credentials: {name: any; email: any; password: any}): Observable<any> {
     return this.reqS.post(authEndpoints.signup, credentials).pipe(
-      tap(data => {
-        localStorage.setItem(CURRENT_USER, JSON.stringify(data.user))
-        localStorage.setItem(TOKEN_KEY,  data.token)
+      tap(res => {
+        localStorage.setItem(CURRENT_USER, JSON.stringify(res.data))
+        localStorage.setItem(TOKEN_KEY,  res.token)
         this.isAuthenticated.next(true);
       })
     );
   }
-  updateUser(credentials: {fullname: any; phone: any; address: any}): Observable<any> {
-    return this.reqS.patch(authEndpoints.updateProfile, credentials).pipe(     
-      tap(data => {
-        console.log(data)
-        localStorage.setItem(CURRENT_USER, JSON.stringify(data.userInfo))
+  updateUser(id, credentials): Observable<any> {
+    return this.reqS.put(baseEndpoints.user + '/' + id, credentials).pipe(     
+      tap(res => {
+        console.log(res)
+        localStorage.setItem(CURRENT_USER, JSON.stringify(res.data))
         this.isAuthenticated.next(true);
       })
     );
+  }
+  getUsers(): Observable<any> {
+    return this.reqS.get(baseEndpoints.user)
+  }
+  getUser(id): Observable<any> {
+    return this.reqS.get(baseEndpoints.user + '/'+ id)
   }
   private save_token(data: { success: any; token: string; }) {
     if (data.success) {
