@@ -69,18 +69,10 @@ export class NavService {
 			]
 		},
 		{
-			title: 'Media', path: '/media', icon: 'camera', type: 'link', active: false
-		},
-		
-		{
 			title: 'Users', icon: 'user-plus', type: 'sub', active: false, children: [
 				{ path: 'users/list-user', title: 'User List', type: 'link' },
 			]
 		},
-		// {
-		// 	title: 'Reports', path: '/reports', icon: 'bar-chart', type: 'link', active: false
-		// },
-	
 	]
 	// Array
 	items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
