@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ShopComponent } from './shop/shop.component';
 import { PagesComponent } from './pages/pages.component';
+import { AuthGuard } from './core/guards/auth.guard';
+import { RoleGuard } from './core/guards/role-guard.guard';
 
 const routes: Routes = [
   {
@@ -17,7 +19,8 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadChildren: () => import('./admin-dashboard/admin-dashboard.module').then(m => m.AdminDashboardModule)
+    loadChildren: () => import('./admin-dashboard/admin-dashboard.module').then(m => m.AdminDashboardModule),
+    canActivate: [RoleGuard]
   },
   {
     path: 'shop',

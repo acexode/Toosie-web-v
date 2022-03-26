@@ -1,3 +1,4 @@
+import { RoleGuard } from './../core/guards/role-guard.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -15,6 +16,7 @@ import { SuccessComponent } from './checkout/success/success.component';
 
 import { Resolver } from '../shared/services/resolver.service';
 import { SingleProductResolver } from '../shared/services/single-product.service';
+import { AuthGuard } from '../core/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -57,7 +59,8 @@ const routes: Routes = [
   },
   {
     path: 'checkout',
-    component: CheckoutComponent
+    component: CheckoutComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'checkout/success/:id',

@@ -3,8 +3,7 @@ import { RequestService } from './../../request/request.service';
 import { Injectable } from '@angular/core';
 import { map, tap, switchMap } from 'rxjs/operators';
 import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
-import { Router } from '@angular/router';
-
+import jwt_decode from "jwt-decode";
 
 const TOKEN_KEY = 'my-token';
 const CURRENT_USER = 'current-user';
@@ -17,6 +16,7 @@ export class AuthService {
 
   constructor(private reqS: RequestService) {
     this.loadToken();
+    console.log(this.userAuthenticated())
   }
 
   async loadToken() {
@@ -39,7 +39,8 @@ export class AuthService {
       tap(res => {
         console.log(res.data)
         localStorage.setItem(CURRENT_USER, JSON.stringify(res.data))
-        localStorage.setItem(TOKEN_KEY,  res.token)
+        const {token} = res.token
+        localStorage.setItem(TOKEN_KEY,  token)
         this.isAuthenticated.next(true);
 
       })
@@ -49,7 +50,7 @@ export class AuthService {
     return this.reqS.post(authEndpoints.signup, credentials).pipe(
       tap(res => {
         localStorage.setItem(CURRENT_USER, JSON.stringify(res.data))
-        localStorage.setItem(TOKEN_KEY,  res.token)
+        localStorage.setItem(TOKEN_KEY,  res.token.token)
         this.isAuthenticated.next(true);
       })
     );
@@ -84,6 +85,20 @@ export class AuthService {
   logout() {
     this.isAuthenticated.next(false);
     localStorage.remove( TOKEN_KEY);
+  }
+  public userAuthenticated(): boolean {
+    const token = localStorage.getItem(TOKEN_KEY);
+    if(token){
+      const decode =  jwt_decode(token);
+      if (Date.now() >= decode['exp'] * 1000) {
+        return false;
+      }
+      console.log(decode['exp'], new Date(decode['exp'] * 1000))
+      return true
+
+    }else{
+      return false
+    }
   }
 }
 
