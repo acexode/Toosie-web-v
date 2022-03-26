@@ -7,6 +7,7 @@ import { UploadPrescriptionComponent } from './upload-prescription/upload-prescr
 import { PrescriptionHistoryComponent } from './prescription-history/prescription-history.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -21,7 +22,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     SharedModule,
     PrescriptionRoutingModule,
     Ng2SmartTableModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    RouterModule
   ]
 })
 export class PrescriptionModule { }
