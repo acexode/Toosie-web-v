@@ -1,33 +1,23 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MediaRoutingModule } from './media-routing.module';
 import { MediaComponent } from './media/media.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 // import { Ng2SmartTableModule } from 'ng2-smart-table';
 
-// import { DropzoneModule } from 'ngx-dropzone-wrapper';
-// import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
-// import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
-
-// const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
-//   maxFilesize: 50,
-//   url: 'https://httpbin.org/post',
-// };
 
 
 @NgModule({
   declarations: [MediaComponent],
   imports: [
     CommonModule,
-    // MediaRoutingModule,
-    // DropzoneModule,
+    MediaRoutingModule,
+    ReactiveFormsModule,
+    NgxDropzoneModule
     // Ng2SmartTableModule
   ],
-  providers: [
-    // {
-    //   provide: DROPZONE_CONFIG,
-    //   useValue: DEFAULT_DROPZONE_CONFIG
-    // }
-  ]
+  providers: []
 })
 export class MediaModule { }

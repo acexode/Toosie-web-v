@@ -7,7 +7,7 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: '',
+        path: 'list',
         component: MediaComponent,
         data: {
           title: "Media",

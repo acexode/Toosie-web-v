@@ -1,7 +1,6 @@
 import { AuthService } from 'src/app/core/service/auth/auth.service';
 import { BlogService } from 'src/app/core/service/blog/blog.service';
 import { Component, OnInit } from '@angular/core';
-import { taxesDB } from '../../../shared/tables/taxes';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 

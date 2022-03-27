@@ -4,7 +4,7 @@ import { Routes } from '@angular/router';
 export const content: Routes = [
 
   {
-    path: 'media',
+    path: 'banners',
     loadChildren: () => import('../../components/media/media.module').then(m => m.MediaModule),
   },
   {

@@ -58,8 +58,8 @@ export class NavService {
 		},
 		{
 			title: 'Banners', icon: 'tag', type: 'sub', active: false, children: [
-				{ path: '/banners/banner-list', title: 'List Banners', type: 'link' },
-				{ path: '/banners/create-banners', title: 'Create Banners', type: 'link' },
+				{ path: 'banners/list', title: 'Banners', type: 'link' },
+				{ path: 'banners/create-banners', title: 'Parallax', type: 'link' },
 			]
 		},
 		{
