@@ -27,6 +27,10 @@
             <h5>Banner Text</h5>
         </div>
         <form [formGroup]="productForm" class="px-3 py-3" (ngSubmit)="onSubmit()">
+            <div class="pl-2">  
+                <label for="name">Set as current:</label>  
+                <input type="checkbox" id="name" name="current" formControlName="current" >  
+              </div>  
             <table class="table" formArrayName="banners">
                 <!-- <tr>  
                 <th colspan="2">Add Multiple Quantity:</th>  
@@ -59,7 +63,7 @@
         <div class="card-body">
             <div id="batchDelete" class="category-table custom-datatable media-datatable">
                 <div class="table-responsive">
-                    <!-- <ng2-smart-table [settings]="settings" [source]="media"></ng2-smart-table> -->
+                    <ng2-smart-table [settings]="settings" [source]="media"></ng2-smart-table>
                 </div>
             </div>
         </div>

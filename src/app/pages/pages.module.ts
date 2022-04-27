@@ -25,6 +25,7 @@ import { ErrorComponent } from './error/error.component';
 
 // Blog Components
 import { BlogDetailsComponent } from './blog/blog-details/blog-details.component';
+import { PrivacyComponent } from './privacy/privacy.component';
 
 
 
@@ -47,6 +48,7 @@ import { BlogDetailsComponent } from './blog/blog-details/blog-details.component
 
     ErrorComponent,
     BlogDetailsComponent,
+    PrivacyComponent,
 
 
   ],

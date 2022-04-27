@@ -1,6 +1,7 @@
 import { InventoryService } from "src/app/core/service/inventory/inventory.service";
 import { Component, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
+import { BannerService } from "src/app/core/service/banner/banner.service";
 
 @Component({
   selector: "app-media",
@@ -12,13 +13,62 @@ export class MediaComponent implements OnInit {
   files: File[] = [];
   productForm: FormGroup;
   loading = false;
-  constructor(private fb: FormBuilder, private invS: InventoryService) {
+  constructor(private fb: FormBuilder, private bannerS: BannerService) {
     // this.media = mediaDB.data;
     this.productForm = this.fb.group({
+      current: false,
       banners: this.fb.array([]),
     });
   }
+  ngOnInit() {
+    this.loadBanner()
+  }
+  public settings = {
+    actions: {
+      edit: true,
+      add: false,
+      position: 'right'
+  },
+    delete: {
+      confirmDelete: true,
 
+      deleteButtonContent: 'Delete data',
+      saveButtonContent: 'save',
+      cancelButtonContent: 'cancel'
+    },
+    edit: {
+      editButtonContent: `'<i class="fas fa-pencil-alt fa-fw"></i>'`,
+      saveButtonContent: '<i class="fas fa-check fa-fw"></i>',
+      cancelButtonContent: '<i class="fas fa-times fa-fw"></i>',
+      confirmSave: true
+    },
+    columns: {
+      banners: {
+        title: 'Image',
+        type: 'html',
+      },
+      title: {
+        title: 'Name',
+        type: 'html',
+      },
+      current: {
+        title: 'Current Banner',
+      },
+    },
+  };
+  loadBanner(){
+    this.bannerS.BannerStore.subscribe((e:any) =>{
+      console.log(e)
+      this.media = e.map(e =>{
+        return {
+          ...e,
+          current: e.current === true ? "Yes" : "No",
+          title: e.textContent.map(b => `<p> ${b.header}</p>`).join(""),
+          banners: e.banners.map(b => `<img src=${b} class='imgTable'>`)
+        }
+      })
+    })
+  }
   banners(): FormArray {
     return this.productForm.get("banners") as FormArray;
   }
@@ -39,7 +89,7 @@ export class MediaComponent implements OnInit {
     this.files.splice(i, 1);
   }
 
-  ngOnInit() {}
+
 
   onSelect(event) {
     console.log(event);
@@ -61,14 +111,15 @@ export class MediaComponent implements OnInit {
     for (let i = 0; i < this.files.length; i++) {
       data.append("upload", this.files[i], this.files[i].name);
     }
-    this.invS.uploadMedia(data).subscribe((inv) => {
+    this.bannerS.uploadMedia(data).subscribe((inv) => {
       const obj = {
+        ...this.productForm.value,
         banners: inv.images,
-        text: this.productForm.get("banners").value,
+        textContent: this.productForm.get("banners").value,
       };
       console.log(this.productForm.get("banners"))
       console.log(obj)
-      this.invS.createInventory(obj).subscribe((res) => {
+      this.bannerS.createBanner(obj).subscribe((res) => {
         console.log(res);
         this.loading = false;
         this.files = [];

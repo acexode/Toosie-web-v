@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MediaRoutingModule } from './media-routing.module';
 import { MediaComponent } from './media/media.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
-// import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 
 
@@ -15,8 +15,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     CommonModule,
     MediaRoutingModule,
     ReactiveFormsModule,
-    NgxDropzoneModule
-    // Ng2SmartTableModule
+    NgxDropzoneModule,
+    Ng2SmartTableModule
   ],
   providers: []
 })

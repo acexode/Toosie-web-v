@@ -8,6 +8,7 @@ export const baseEndpoints = {
     prescription: serverBaseUrl + '/prescription',
     order: serverBaseUrl + '/order',
     blog: serverBaseUrl + '/blog',
+    banner: serverBaseUrl + '/banner',
 
 
   };

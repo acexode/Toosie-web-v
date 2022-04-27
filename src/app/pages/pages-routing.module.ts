@@ -1,3 +1,4 @@
+import { PrivacyComponent } from './privacy/privacy.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -48,6 +49,10 @@ const routes: Routes = [
   { 
     path: 'profile', 
     component: ProfileComponent 
+  },
+  { 
+    path: 'privacy', 
+    component: PrivacyComponent 
   },
   { 
     path: 'contact', 
