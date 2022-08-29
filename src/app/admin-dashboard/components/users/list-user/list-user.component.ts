@@ -21,13 +21,13 @@ export class ListUserComponent implements OnInit {
       add: false,
       position: 'right'
   },
-    delete: {
-      confirmDelete: true,
+    // delete: {
+    //   confirmDelete: true,
 
-      deleteButtonContent: 'Delete data',
-      saveButtonContent: 'save',
-      cancelButtonContent: 'cancel'
-    },
+    //   deleteButtonContent: 'Delete data',
+    //   saveButtonContent: 'save',
+    //   cancelButtonContent: 'cancel'
+    // },
     edit: {
       editButtonContent: `'<i class="fas fa-pencil-alt fa-fw"></i>'`,
       saveButtonContent: '<i class="fas fa-check fa-fw"></i>',

@@ -22,7 +22,7 @@ export class HeaderThreeComponent implements OnInit {
     this.authS.isAuthenticated.subscribe(val => this.isAuthenticated = val)
     const userType = this.authS.currentUser().userType
     console.log( this.authS.currentUser())
-    this.isAdmin = userType.toLowerCase() === 'admin' ? true: false
+    this.isAdmin = userType?.toLowerCase() === 'admin' ? true: false
   }
 
   // @HostListener Decorator
