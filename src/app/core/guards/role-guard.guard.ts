@@ -17,9 +17,9 @@ export class RoleGuard implements CanActivate {
     console.log(user?.userType);
     console.log(this.authS.userAuthenticated(), !this.authS.userAuthenticated());
     if (this.authS.userAuthenticated() === false || user?.userType !== "admin") {
-      this.toastrService.info("You need admin priviledges to view this page", '', {
-        timeOut: 3000,
-      });
+      // this.toastrService.info("You need admin priviledges to view this page", '', {
+      //   timeOut: 3000,
+      // });
       console.log("You need admin priviledges to view this page");
       this.router.navigate(["pages/login"]);
       return false;
