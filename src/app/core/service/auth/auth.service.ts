@@ -93,7 +93,7 @@ export class AuthService {
       if (Date.now() >= decode['exp'] * 1000) {
         return false;
       }
-      console.log(decode['exp'], new Date(decode['exp'] * 1000))
+      console.log('authenticated')
       return true
 
     }else{
