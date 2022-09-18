@@ -1,4 +1,5 @@
-export const serverBaseUrl = 'https://toosie.herokuapp.com/api/v1';
+// export const serverBaseUrl = 'https://toosie.herokuapp.com/api/v1';
+export const serverBaseUrl = 'http://localhost:3000/api/v1';
 
 export const baseEndpoints = {
     auth: serverBaseUrl + '/auth',

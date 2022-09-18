@@ -10,7 +10,8 @@
                     <div class="table-responsive">
                         <ng2-smart-table 
                         [settings]="settings"
-                        
+                        (deleteConfirm)="onDeleteConfirm($event)"
+                        (editConfirm)="onEditConfirm($event)"
                          [source]="order"></ng2-smart-table>
                     </div>
                 </div>

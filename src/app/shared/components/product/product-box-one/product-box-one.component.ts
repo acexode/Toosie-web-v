@@ -27,6 +27,7 @@ export class ProductBoxOneComponent implements OnInit {
   constructor(private productService: ProductService, private router: Router) { }
 
   ngOnInit(): void {
+    console.log(this.product)
     if(this.loader) {
       setTimeout(() => { this.loader = false; }, 2000); // Skeleton Loader
     }
@@ -75,6 +76,10 @@ export class ProductBoxOneComponent implements OnInit {
 
   addToCompare(product: any) {
     this.productService.addToCompare(product);
+  }
+
+  parseStr(str){
+    return parseInt(str)
   }
 
 }

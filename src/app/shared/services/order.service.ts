@@ -56,6 +56,12 @@ export class OrderService {
   getAllOrders(){
     return this.reqS.get(baseEndpoints.order)
   }
+  updateOrder(id, data){
+    return this.reqS.put(baseEndpoints.order + '/' + id, data)
+  }
+  deleteOrder(id, ){
+    return this.reqS.delete(baseEndpoints.order + '/' + id)
+  }
   getTransaction(id){
     return this.reqS.get(baseEndpoints.order + "?paymentId=" + id)
   }

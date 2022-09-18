@@ -55,7 +55,7 @@
       <p>{{ product?.description }}</p>
       <h4>
         ₦{{ product?.actualPrice  }}
-        <del *ngIf="product?.discountPercent"><span class="money"> ₦{{ product?.actualPrice }}</span></del>
+        <del *ngIf="parseStr(product?.discountPercent) > 0"><span class="money"> ₦{{ product?.actualPrice }}</span></del>
       </h4>
       <!-- <ul class="color-variant" *ngIf="Color(product?.variants).length">
         <li [class]="color" *ngFor="let color of Color(product?.variants)" [ngStyle]="{'background-color': color}"
