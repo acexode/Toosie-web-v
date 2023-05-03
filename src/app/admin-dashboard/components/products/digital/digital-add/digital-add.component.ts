@@ -36,6 +36,8 @@ export class DigitalAddComponent implements OnInit {
       category: ['', [Validators.required]],
       title: ['', [Validators.required] ],
       description: ['', [Validators.required ]],
+      ingredients: ['', [Validators.required ]],
+      warning: ['', [Validators.required ]],
       // shortSummary: ['', [Validators.required ]],
       enabled: [false, [Validators.required ]],
       isSpecial: [false, [Validators.required ]],

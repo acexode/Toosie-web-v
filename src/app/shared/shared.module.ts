@@ -93,7 +93,7 @@ import { DiscountPipe } from './pipes/discount.pipe';
     BarRatingModule,
     LazyLoadImageModule,
     NgxSkeletonLoaderModule,
-    TranslateModule,
+    // TranslateModule,
     FooterOneComponent,
     HeaderThreeComponent,
     BreadcrumbComponent,

@@ -1,5 +1,8 @@
+import { IProducts } from './../../../../../core/model/product.interface';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { digitalListDB } from 'src/app/admin-dashboard/shared/tables/digital-list';
+import { ExportServiceService } from 'src/app/core/service/export-service/export-service.service';
 import { InventoryService } from 'src/app/core/service/inventory/inventory.service';
 @Component({
   selector: 'app-digital-list',
@@ -10,8 +13,10 @@ export class DigitalListComponent implements OnInit {
   public digital_list = []
   public categories = []
   public products = []
+  public exportProduct = []
 
-  constructor(private invS: InventoryService) {
+  constructor(private invS: InventoryService, private exportS: ExportServiceService,
+    private toastrService: ToastrService,) {
     this.digital_list = digitalListDB.digital_list;
   }
 
@@ -75,6 +80,20 @@ export class DigitalListComponent implements OnInit {
           img: `<img src=${e?.resourceImages[0]} class='imgTable'>`
         }
       })
+      this.exportProduct = inv.data.map((e: IProducts) =>{
+        return {
+         ['title']: e.title,
+         ['Actual Price']: e.actualPrice,
+         ['Discount %']: e.discountPercent,
+         ['Stock']: e.stock,
+         ['Tags']: e?.tags.join(', '),
+         ['Brand']: e.brand,
+         ['Description']: e.description,
+         ['Product Images']: e.resourceImages.join(', '),
+         ['Ingredients']: e.ingredients,
+         ['Warnings']: e.warning,
+        }
+      })
     })
   }
   onCustom(event) {
@@ -91,6 +110,17 @@ export class DigitalListComponent implements OnInit {
       })
     } else {
       event.confirm.reject();
+    }
+  }
+
+  exportToXlsx(){
+    if(this.exportProduct.length > 0){
+      const headings = Object.keys(this.exportProduct[0])
+
+      this.exportS.exportToExcel([headings], this.exportProduct, 'Toosie-Pharmacy-Products')
+
+    }else{
+      this.toastrService.error("Nothing to export");
     }
   }
 

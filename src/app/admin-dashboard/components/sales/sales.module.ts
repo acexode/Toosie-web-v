@@ -7,6 +7,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SalesRoutingModule } from './sales-routing.module';
 import { OrdersComponent } from './orders/orders.component';
 import { TransactionsComponent } from './transactions/transactions.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [OrdersComponent, TransactionsComponent],
@@ -16,6 +17,7 @@ import { TransactionsComponent } from './transactions/transactions.component';
     Ng2SmartTableModule,
     NgxDatatableModule,
     Ng2SmartTableModule,
+    NgbModule
   ]
 })
 export class SalesModule { }

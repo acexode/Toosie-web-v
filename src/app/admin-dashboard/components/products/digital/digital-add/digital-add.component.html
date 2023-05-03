@@ -119,13 +119,31 @@
                             </div>
                         </div>
                     </div>
+                    <div class="digital-add needs-validation">
+
+                        <div class="form-group mb-0">
+                            <label class="col-form-label "> Ingredients</label>
+                            <div class="description-sm">
+                                <textarea class="form-control" formControlName="ingredients" language="en"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="digital-add needs-validation">
+
+                        <div class="form-group mb-0">
+                            <label class="col-form-label "> Warning</label>
+                            <div class="description-sm">
+                                <textarea class="form-control" formControlName="warning" language="en"></textarea>
+                            </div>
+                        </div>
+                    </div>
                     <label class="col-form-label "> Product Upload</label>
                     <div class="card-body dropzone-custom p-0">
                         <ngx-dropzone (change)="onSelect($event)">
                             <div class="dropzone dropzone-primary" style="border: none;">
                             <div class="dz-message needsclick">
                                 <i class="fa fa-cloud-upload"></i>
-                                <h4 class="mb-0 f-w-600">Drop Prescription here or click to upload.</h4>
+                                <h4 class="mb-0 f-w-600">Drop Image here or click to upload.</h4>
                             </div>
                         </div>
                             <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">

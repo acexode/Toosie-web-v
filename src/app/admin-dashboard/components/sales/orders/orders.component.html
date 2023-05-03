@@ -6,14 +6,72 @@
                 <div class="card-header">
                     <h5>Manage Order</h5>
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <ng2-smart-table 
-                        [settings]="settings"
-                        (deleteConfirm)="onDeleteConfirm($event)"
-                        (editConfirm)="onEditConfirm($event)"
-                         [source]="order"></ng2-smart-table>
+                <div class="card-body tab2-card">
+                    <div class="d-flex flex-row-reverse">
+                        <div class="mb-0">
+                            <button (click)="exportToXlsx()" class="btn btn-outline-primary">Export Data to Excel</button>
+                        </div>
                     </div>
+                    <ngb-tabset class="tab-coupon">
+                        <ngb-tab title="Abuja Orders">
+                            <ng-template ngbTabContent>
+                                <div class="table-responsive">
+                                    <ng2-smart-table [settings]="settings" (deleteConfirm)="onDeleteConfirm($event)"
+                                        (editConfirm)="onEditConfirm($event)" [source]="abujaOrder"></ng2-smart-table>
+                                </div>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab title="Lagos Orders">
+                            <ng-template ngbTabContent>
+                               
+                                <div class="table-responsive">
+                                    <ng2-smart-table [settings]="settings" (deleteConfirm)="onDeleteConfirm($event)"
+                                        (editConfirm)="onEditConfirm($event)" [source]="lagosOrder"></ng2-smart-table>
+                                </div>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab title="Kano Orders">
+                            <ng-template ngbTabContent>
+                                <div class="table-responsive">
+                                    <ng2-smart-table [settings]="settings" (deleteConfirm)="onDeleteConfirm($event)"
+                                        (editConfirm)="onEditConfirm($event)" [source]="kanoOrder"></ng2-smart-table>
+                                </div>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab title="Priority Deliveries">
+                            <ng-template ngbTabContent>
+                                <div class="table-responsive">
+                                    <ng2-smart-table [settings]="settings" (deleteConfirm)="onDeleteConfirm($event)"
+                                        (editConfirm)="onEditConfirm($event)" [source]="priorityOrder"></ng2-smart-table>
+                                </div>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab title="Pending Payment">
+                            <ng-template ngbTabContent>
+                                <div class="table-responsive">
+                                    <ng2-smart-table [settings]="settings" (deleteConfirm)="onDeleteConfirm($event)"
+                                        (editConfirm)="onEditConfirm($event)" [source]="pendingPayment"></ng2-smart-table>
+                                </div>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab title="Pending Delivery">
+                            <ng-template ngbTabContent>
+                                <div class="table-responsive">
+                                    <ng2-smart-table [settings]="settings" (deleteConfirm)="onDeleteConfirm($event)"
+                                        (editConfirm)="onEditConfirm($event)" [source]="pendingDelivery"></ng2-smart-table>
+                                </div>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab title="Completed Order">
+                            <ng-template ngbTabContent>
+                                <div class="table-responsive">
+                                    <ng2-smart-table [settings]="settings" (deleteConfirm)="onDeleteConfirm($event)"
+                                        (editConfirm)="onEditConfirm($event)" [source]="completedOrder"></ng2-smart-table>
+                                </div>
+                            </ng-template>
+                        </ngb-tab>
+                    </ngb-tabset>
+
                 </div>
             </div>
         </div>
