@@ -8,9 +8,10 @@ import { SalesRoutingModule } from './sales-routing.module';
 import { OrdersComponent } from './orders/orders.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ViewOrderComponent } from './view-order/view-order.component';
 
 @NgModule({
-  declarations: [OrdersComponent, TransactionsComponent],
+  declarations: [OrdersComponent, TransactionsComponent, ViewOrderComponent],
   imports: [
     CommonModule,
     SalesRoutingModule,

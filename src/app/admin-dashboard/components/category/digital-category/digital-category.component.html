@@ -48,34 +48,31 @@
                                                     <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
                                                 </ngx-dropzone-preview>
                                             </ngx-dropzone>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="modal-footer">
+                                    <button [disabled]="!categoryForm.valid" class="btn primary-btn">
+                                        Save
+                                        <div *ngIf="loading" class="spinner-grow" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </button>
+                                    <button class="btn btn-secondary" type="button" data-dismiss="modal"
+                                        (click)="modal.dismiss('Cross click')">Close</button>
+                                </div>
+                            </form>
+                        </ng-template>
                     </div>
-                    <div class="modal-footer">
-                        <button [disabled]="!categoryForm.valid" class="btn primary-btn">
-                            Save
-                            <div *ngIf="loading" class="spinner-grow" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                        </button>
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal"
-                            (click)="modal.dismiss('Cross click')">Close</button>
-                    </div>
-                    </form>
-                    </ng-template>
-                </div>
-                <div id="batchDelete" class="category-table custom-datatable">
-                    <div class="table-responsive">
-                        <ng2-smart-table 
-                        [settings]="settings"
-                        (deleteConfirm)="onDeleteConfirm($event)"
-                        (editConfirm)="onEditConfirm($event)"
-                         [source]="categories"></ng2-smart-table>
+                    <div id="batchDelete" class="category-table custom-datatable">
+                        <div class="table-responsive">
+                            <ng2-smart-table [settings]="settings" (deleteConfirm)="onDeleteConfirm($event)"
+                                [source]="categories"></ng2-smart-table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 <!-- Container-fluid Ends-->

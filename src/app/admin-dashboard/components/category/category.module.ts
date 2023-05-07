@@ -15,13 +15,14 @@ import 'mousetrap';
 import { CategoryRoutingModule } from './category-routing.module';
 import { DigitalCategoryComponent } from './digital-category/digital-category.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { EditCategoryComponent } from './edit-category/edit-category.component';
 
 
 
 
 
 @NgModule({
-  declarations: [DigitalCategoryComponent],
+  declarations: [DigitalCategoryComponent, EditCategoryComponent],
   imports: [
     CommonModule,
     FormsModule,

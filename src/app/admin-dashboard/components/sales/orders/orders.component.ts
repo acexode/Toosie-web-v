@@ -5,6 +5,7 @@ import { DatatableComponent } from "@swimlane/ngx-datatable";
 import { orderDB } from "../../../shared/tables/order-list";
 import { ToastrService } from "ngx-toastr";
 import { ExportServiceService } from "src/app/core/service/export-service/export-service.service";
+import { ViewOrderComponent } from "../view-order/view-order.component";
 @Component({
   selector: "app-orders",
   templateUrl: "./orders.component.html",
@@ -89,6 +90,12 @@ export class OrdersComponent implements OnInit {
       totalCost: {
         title: "Total in Stock",
       },
+      view: {
+        title: "View Order",
+        filter: false,
+        type: "custom",
+        renderComponent: ViewOrderComponent,
+      },
     },
   };
   updateFilter(event) {
@@ -112,7 +119,9 @@ export class OrdersComponent implements OnInit {
   loadData() {
     this.orderS.getAllOrders().subscribe((res: any) => {
       this.mainOrder = res.data;
+      this.orderS.allOrder.next(res.data)
       console.log(res);
+      this.orderS.checkoutItems
       this.lagosOrder = this.formatData(
         res.data.filter(
           (e) =>

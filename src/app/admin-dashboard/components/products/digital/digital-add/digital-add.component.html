@@ -94,9 +94,11 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div *ngFor="let i of editProduct.resourceImages" class="col-3">
+                            <div *ngFor="let i of savedImages" class="col-3">
                                 <img [src]="i" class="img-thumbnail" alt="...">
-
+                                <a class="trash" href="javascript:void(0)" (click)="removeItem(i)">
+                                    <i class="ti-trash" aria-hidden="true"></i>
+                                </a>
                             </div>
                         </div>
                       
