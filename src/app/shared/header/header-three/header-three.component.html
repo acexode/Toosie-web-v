@@ -9,27 +9,27 @@
               <div class="header-contact">
                 <ul>
                   <li>Welcome to Toosie</li>
-                  <li><i class="fa fa-phone" aria-hidden="true"></i>Call Us: +234 70 6654 432</li>
+                  <li><i class="fa fa-phone" aria-hidden="true"></i>Call Us: +234 91217751148</li>
                 </ul>
               </div>
             </div>
             <div class="col-lg-6 text-right">
               <ul class="header-dropdown">
-                <li class="compare">
+                <!-- <li class="compare">
                   <a [routerLink]="['/shop/compare']"><i class="fa fa-random" aria-hidden="true"></i>Compare</a>
                 </li>
                 <li class="mobile-wishlist">
                   <a [routerLink]="['/shop/wishlist']"><i class="fa fa-heart" aria-hidden="true"></i>Wishlist</a>
-                </li>
+                </li> -->
                 <li class="onhover-dropdown mobile-account">
                   <i class="fa fa-user" aria-hidden="true"></i> My Account
                   <ul class="onhover-show-div">
-                    <li>
-                      <a [routerLink]="['/pages/login']" data-lng="en">
+                    <li >
+                      <a *ngIf="!isAuthenticated" [routerLink]="['/pages/login']" data-lng="en">
                         Login
                       </a>
                     </li>
-                    <li *ngIf="isAuthenticated">
+                    <li class="ml-3" *ngIf="isAuthenticated">
                       <a data-lng="es">
                         Logout
                       </a>
@@ -37,7 +37,7 @@
                    
                   </ul>
                 </li>
-                <li *ngIf="isAdmin" class="mobile-wishlist">
+                <li class="pl-5" *ngIf="isAdmin" class="mobile-wishlist">
                   <a [routerLink]="['/dashboard/main/products/product-list']">Go to Dashboard</a>
                 </li>
                 <li *ngIf="!isAuthenticated" class="mobile-wishlist">
