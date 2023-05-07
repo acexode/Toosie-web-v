@@ -72,7 +72,7 @@ export class CollectionLeftSidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
     this.route.params.subscribe(route =>{
       const catId = route.slug
       console.log(route)

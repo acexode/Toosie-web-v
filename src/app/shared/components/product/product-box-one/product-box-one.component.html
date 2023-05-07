@@ -1,4 +1,7 @@
 <div *ngIf="!loader">
+  <div *ngIf="product.stock === 0" class="out-of-stock">
+    <h3>Out of stock</h3>
+  </div>
   <div class="img-wrapper">
     <div class="lable-block">
       <span class="lable3" *ngIf="product.new">new</span>

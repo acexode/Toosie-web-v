@@ -5,6 +5,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProductService } from "../../../services/product.service";
 import { Product } from "../../../classes/product";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cart-modal',
@@ -25,7 +26,9 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
     private modalService: NgbModal,
     private productService: ProductService,
-    private invS: InventoryService
+    private invS: InventoryService,
+    private toast: ToastrService,
+    
     ) {
   }
 
@@ -56,6 +59,7 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       }
     }
+    this.toast.error("This product is out of stock")
   }
 
   private getDismissReason(reason: any): string {

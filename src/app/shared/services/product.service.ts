@@ -141,25 +141,29 @@ export class ProductService {
 
   // Add to Cart
   public addToCart(product): any {
-    const cartItem = state.cart.find(item => item._id === product._id);
-    const qty = product.quantity ? product.quantity : 1;
-    const items = cartItem ? cartItem : product;
-    const stock = this.calculateStockCounts(items, qty);
-    console.log(cartItem)
-    // if(!stock) return false
+    if(product.stock > 0){
 
-    if (cartItem) {
-        cartItem.quantity += qty    
-    } else {
-      state.cart.push({
-        ...product,
-        quantity: qty
-      })
+      const cartItem = state.cart.find(item => item._id === product._id);
+      const qty = product.quantity ? product.quantity : 1;
+      const items = cartItem ? cartItem : product;
+      const stock = this.calculateStockCounts(items, qty);
+      console.log(cartItem)
+      // if(!stock) return false
+  
+      if (cartItem) {
+          cartItem.quantity += qty    
+      } else {
+        state.cart.push({
+          ...product,
+          quantity: qty
+        })
+      }
+  
+      this.OpenCart = true; // If we use cart variation modal
+      localStorage.setItem("cartItems", JSON.stringify(state.cart));
+      return true;
     }
-
-    this.OpenCart = true; // If we use cart variation modal
-    localStorage.setItem("cartItems", JSON.stringify(state.cart));
-    return true;
+    return false;
   }
 
   // Update Cart Quantity
