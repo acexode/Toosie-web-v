@@ -49,9 +49,11 @@ export class AuthService {
   signup(credentials: {name: any; email: any; password: any}): Observable<any> {
     return this.reqS.post(authEndpoints.signup, credentials).pipe(
       tap(res => {
+        console.log(res);
         localStorage.setItem(CURRENT_USER, JSON.stringify(res.data))
-        localStorage.setItem(TOKEN_KEY,  res.token.token)
+        // localStorage.setItem(TOKEN_KEY,  res.token.token)
         this.isAuthenticated.next(true);
+        return res
       })
     );
   }

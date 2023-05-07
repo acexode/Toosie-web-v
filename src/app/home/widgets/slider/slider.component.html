@@ -5,8 +5,8 @@
 	      <div class="container">
 	        <div class="row">
 	          <div class="col">
-	            <div class="slider-contain">
-	              <div>
+	            <div class="slider-contain" style="flex-direction: column;">
+	              <div class="pt-5 mt-5">
 	                <h4>{{slider.title}}</h4>
 	                <h1>{{slider.subTitle}}</h1>
 	                <a [routerLink]="['/shop/category/baby-child']" 
@@ -15,6 +15,10 @@
 	                   {{buttonText}}
 	                </a>
 	              </div>
+				  <div class="pt-5  d-flex flex-row">
+					<a target="_blank" class="mb-2 mr-4" href="https://apps.apple.com/be/app/toosie/id1620253645"><img src="assets/images/icon/apple.png" alt=""></a>
+					<a target="_blank" href="https://play.google.com/store/apps/details?id=io.toosie.com"><img src="assets/images/icon/android.png" alt=""></a>
+					</div>
 	            </div>
 	          </div>
 	        </div>

@@ -12,7 +12,7 @@ const MY_CART = 'my_cart';
 })
 export class OrdersService {
   cartStore: BehaviorSubject<any> = new BehaviorSubject([]);
-  constructor(private reqS: RequestService) {
+   constructor(private reqS: RequestService) {
     const cart = localStorage.getItem(MY_CART)
     this.cartStore.next(JSON.parse(cart));
    

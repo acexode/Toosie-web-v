@@ -3,7 +3,7 @@ import { baseEndpoints } from './../../core/config/endpoints';
 import { RequestService } from './../../core/request/request.service';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 const state = {
   checkoutItems: JSON.parse(localStorage['checkoutItems'] || '[]')
@@ -13,6 +13,7 @@ const state = {
   providedIn: 'root'
 })
 export class OrderService {
+  allOrder: BehaviorSubject<any> = new BehaviorSubject([]);
 
   constructor(private router: Router, private reqS: RequestService) { }
 
