@@ -23,7 +23,7 @@ export class BrandsComponent implements OnInit {
 
   get filterbyBrand() {
     const uniqueBrands = [];
-    this.products.filter((product) => {
+    this.products?.filter((product) => {
       if (product.brand) {
         const index = uniqueBrands.indexOf(product.brand)
         if (index === -1) uniqueBrands.push(product.brand)

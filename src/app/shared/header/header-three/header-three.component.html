@@ -29,7 +29,7 @@
                         Login
                       </a>
                     </li>
-                    <li class="ml-3" *ngIf="isAuthenticated">
+                    <li (click)="logout()" class="ml-3" *ngIf="isAuthenticated">
                       <a data-lng="es">
                         Logout
                       </a>

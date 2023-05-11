@@ -32,6 +32,8 @@ export class OrderService {
     const deliveryCost = locationList.filter(e => e.label === details.city )[0].value
     var item = {
         customerId: customerID,
+        priorityDelivery: details.priorityDelivery,
+        deliveryType: details.deliveryType,
         shipping: {
           city: details.city,
           state: details.state,
@@ -42,7 +44,8 @@ export class OrderService {
         products: product,
         orderDetails: orderDetails,
         totalCost: amount,
-        paymentMethod: details.paymentMethod
+        paymentMethod: details.paymentMethod,
+        paymentId: 'lorem ipsum',
     };
     // state.checkoutItems = item;
     // localStorage.setItem("checkoutItems", JSON.stringify(item)); 

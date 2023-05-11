@@ -1,6 +1,7 @@
 <app-breadcrumb [title]="'Register'" [breadcrumb]="'Register'"></app-breadcrumb>
 <!-- section start -->
 <section class="register-page section-b-space">
+    
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -41,7 +42,7 @@
                                     <span *ngIf="password?.errors?.required">Password is required</span>
                                   </div>
                             </div>
-                            <button [disabled]="!credentials.valid" class="btn btn-solid">create Account
+                            <button [disabled]="!credentials.valid" type="submit" class="btn btn-solid">create Account
                                 <div *ngIf="loading" class="spinner-grow" role="status">
                                     <span class="sr-only">Loading...</span>
                                   </div>
@@ -53,4 +54,5 @@
         </div>
     </div>
 </section>
+<app-verify-user #verifyUser></app-verify-user>
 <!--Section ends-->

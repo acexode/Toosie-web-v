@@ -1,145 +1,126 @@
-import { Router } from '@angular/router';
-import { locationList } from './locations';
-import { AuthService } from './../../core/service/auth/auth.service';
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
-import { environment } from '../../../environments/environment';
+import { Router } from "@angular/router";
+import { locationList } from "./locations";
+import { AuthService } from "./../../core/service/auth/auth.service";
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Observable } from "rxjs";
+import { IPayPalConfig, ICreateOrderRequest } from "ngx-paypal";
+import { environment } from "../../../environments/environment";
 import { Product } from "../../shared/classes/product";
 import { ProductService } from "../../shared/services/product.service";
 import { OrderService } from "../../shared/services/order.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
-  selector: 'app-checkout',
-  templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.scss']
+  selector: "app-checkout",
+  templateUrl: "./checkout.component.html",
+  styleUrls: ["./checkout.component.scss"],
 })
 export class CheckoutComponent implements OnInit {
-
-  public checkoutForm:  FormGroup;
+  public checkoutForm: FormGroup;
   public products: Product[] = [];
-  public payPalConfig ? : IPayPalConfig;
-  public payment: string = 'POD';
-  public amount:  any;
-  public user: any
+  public payPalConfig?: IPayPalConfig;
+  public payment: string = "POD";
+  public amount: any;
+  public defaultAmount: any;
+  deliveryType = 'delivery';
+  public user: any;
+  priorityDelivery = false;
   allLocations = locationList;
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     public productService: ProductService,
     public authS: AuthService,
     public router: Router,
-    private orderService: OrderService) { 
+    private toast: ToastrService,
+    private orderService: OrderService
+  ) {
     this.checkoutForm = this.fb.group({
-      fullName: ['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      phone: ['', [Validators.required, Validators.pattern('[0-9]+')]],
-      email: ['', [Validators.required, Validators.email]],
-      address: ['', [Validators.required, Validators.maxLength(50)]],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      postalcode: ['', Validators.required]
-    })
+      fullName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("[a-zA-Z][a-zA-Z ]+[a-zA-Z]$"),
+        ],
+      ],
+      phone: ["", [Validators.required, Validators.pattern("[0-9]+")]],
+      email: ["", [Validators.required, Validators.email]],
+      address: ["", [Validators.required, Validators.maxLength(50)]],
+      city: ["", Validators.required],
+      state: ["", Validators.required],
+      paymentType: ["card", [Validators.required]],
+      deliveryType: ["delivery", [Validators.required]],
+    });
   }
 
-  ngOnInit(): void {
-    console.log(this.authS.currentUser())
-    this.user = this.authS.currentUser()
+  ngOnInit() {
+    this.user = this.authS.currentUser();
+    console.log("hello world", this.user);
     this.checkoutForm.patchValue({
       fullName: this.user.fullName,
       email: this.user.email,
-      phone: this.user.phone
-    })
-    this.productService.cartItems.subscribe(response => this.products = response);
-    console.log(this.products)
-    this.getTotal.subscribe(amount => this.amount = amount);
-    this.checkoutForm.get('city').valueChanges.subscribe(v =>{
-      this.getTotal.subscribe(amount => this.amount = amount);
-      this.amount += this.allLocations.filter(f => f.label === v)[0].value
-      console.log(v)
-      console.log(this.amount)
-    })
-    this.initConfig();
+      phone: this.user.phone,
+    });
+    this.productService.cartItems.subscribe(
+      (response) => (this.products = response)
+    );
+    console.log(this.products);
+    this.getTotal.subscribe((amount) => (this.amount = amount));
+    this.checkoutForm.get("state").valueChanges.subscribe((v) => {
+      this.allLocations = locationList.filter((e) => {
+        return e.state === v;
+      });
+    });
+    this.checkoutForm.get("city").valueChanges.subscribe((v) => {
+      this.getTotal.subscribe((amount) => (this.amount = amount));
+      this.amount += this.allLocations.filter((f) => f.label === v)[0].value;
+      this.defaultAmount = this.amount;
+      console.log(v);
+      console.log(this.amount);
+    });
   }
 
   public get getTotal(): Observable<number> {
     return this.productService.cartTotalAmount();
   }
 
-  makePayment(){
+  makePayment() {
     const values = {
       ...this.checkoutForm.value,
-      paymentMethod: this.payment.toLowerCase()
-    }
-    console.log(this.products)
-    this.orderService.createOrder(this.products, values, this.user._id, this.amount )
+      paymentMethod: this.payment.toLowerCase(),
+      priorityDelivery: this.priorityDelivery,
+    };
+    console.log(this.products);
+    this.orderService.createOrder(
+      this.products,
+      values,
+      this.user._id,
+      this.amount
+    );
     // this.router.navigate(['shop/checkout/success/1'])
   }
 
-  // Stripe Payment Gateway
-  stripeCheckout() {
-    var handler = (<any>window).StripeCheckout.configure({
-      key: environment.stripe_token, // publishble key
-      locale: 'auto',
-      token: (token: any) => {
-        // You can access the token ID with `token.id`.
-        // Get the token ID to your server-side code for use.
-        this.orderService.createOrder(this.products, this.checkoutForm.value, token.id, this.amount);
+  addPriority() {
+    if (this.priorityDelivery) {
+      const deliveryState = this.checkoutForm.get("state").value;
+      this.amount = this.defaultAmount;
+      // const city = this.checkoutForm.get("city").value;
+      // this.amount += this.allLocations.filter((f) => f.label === city)[0].value;
+
+      if (deliveryState !== "" && deliveryState !== null) {
+        this.amount += deliveryState === "Abuja"
+            ? 1000
+            : deliveryState === "Lagos"
+            ? 1500
+            : 500;
+      } else {
+        this.toast.error("You have to select delivery state");
       }
-    });
-    handler.open({
-      name: 'Toosie',
-      description: 'Online Pharmacy Store',
-      amount: this.amount * 100
-    }) 
+    } else {
+      this.amount = this.defaultAmount;
+      // const city = this.checkoutForm.get("city").value;
+      // this.amount += this.allLocations.filter((f) => f.label === city)[0].value;
+    }
+    console.log(this.priorityDelivery);
   }
-
-  // Paypal Payment Gateway
-  private initConfig(): void {
-    this.payPalConfig = {
-        currency: this.productService.Currency.currency,
-        clientId: environment.paypal_token,
-        createOrderOnClient: (data) => < ICreateOrderRequest > {
-          intent: 'CAPTURE',
-          purchase_units: [{
-              amount: {
-                currency_code: this.productService.Currency.currency,
-                value: this.amount,
-                breakdown: {
-                    item_total: {
-                        currency_code: this.productService.Currency.currency,
-                        value: this.amount
-                    }
-                }
-              }
-          }]
-      },
-        advanced: {
-            commit: 'true'
-        },
-        style: {
-            label: 'paypal',
-            size:  'small', // small | medium | large | responsive
-            shape: 'rect', // pill | rect
-        },
-        onApprove: (data, actions) => {
-            this.orderService.createOrder(this.products, this.checkoutForm.value, data.orderID, this.getTotal);
-            console.log('onApprove - transaction was approved, but not authorized', data, actions);
-            actions.order.get().then(details => {
-                console.log('onApprove - you can get full order details inside onApprove: ', details);
-            });
-        },
-        onClientAuthorization: (data) => {
-            console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
-        },
-        onCancel: (data, actions) => {
-            console.log('OnCancel', data, actions);
-        },
-        onError: err => {
-            console.log('OnError', err);
-        },
-        onClick: (data, actions) => {
-            console.log('onClick', data, actions);
-        }
-    };
-  }
-
 }

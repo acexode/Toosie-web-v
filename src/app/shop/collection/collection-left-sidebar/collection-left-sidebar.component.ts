@@ -55,7 +55,8 @@ export class CollectionLeftSidebarComponent implements OnInit {
       //     if(params.category)
       //       this.products = this.products.filter(item => item.type == this.category);
       //     // Price Filter
-          this.products = this.currentCategoryProduct.filter(item =>{
+      console.log(this.currentCategoryProduct);
+          this.products = this.currentCategoryProduct?.filter(item =>{
             console.log(item.currentPrice <= this.maxPrice)
             console.log(item.currentPrice >= this.minPrice)
             return item.currentPrice >= this.minPrice && item.currentPrice <= this.maxPrice

@@ -21,7 +21,7 @@ export class HeaderThreeComponent implements OnInit {
   ngOnInit(): void {
     this.authS.isAuthenticated.subscribe(val => this.isAuthenticated = val)
     const userType = this.authS.currentUser().userType
-    console.log( this.authS.currentUser())
+    // console.log( this.authS.currentUser())
     this.isAdmin = userType?.toLowerCase() === 'admin' ? true: false
   }
 
@@ -34,6 +34,10 @@ export class HeaderThreeComponent implements OnInit {
     } else {
       this.stick = false;
     }
+  }
+
+  logout(){
+    this.authS.logout()
   }
 
 }

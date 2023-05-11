@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/core/service/auth/auth.service';
+import { NewsletterComponent } from 'src/app/shared/components/modal/newsletter/newsletter.component';
+import { QuickViewComponent } from 'src/app/shared/components/modal/quick-view/quick-view.component';
+import { VerifyUserComponent } from 'src/app/shared/components/modal/verify-user/verify-user.component';
 
 @Component({
   selector: 'app-register',
@@ -14,9 +17,13 @@ export class RegisterComponent implements OnInit {
   credentials: FormGroup;
   hide = true;
   loading = false;
-  constructor(private fb: FormBuilder,
+  @ViewChild("verifyUser") verifyUser: VerifyUserComponent;
+
+ 
+  constructor(
     private authService: AuthService,
     private router: Router,
+    private fb: FormBuilder,
     ) {
       this.credentials = this.fb.group({
         fullName: ['', [Validators.required]],
@@ -28,14 +35,17 @@ export class RegisterComponent implements OnInit {
      }
 
   ngOnInit() {
+
   }
+
 
   async login() {
     this.loading = true
     this.authService.signup(this.credentials.value).subscribe(
       async (res) => {
         this.loading = false
-        this.router.navigate(['/']);
+        // this.router.navigate(['/']);
+        this.verifyUser.openModal() 
       },
       async (res) => {
         this.loading = false

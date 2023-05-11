@@ -7,6 +7,7 @@ import jwt_decode from "jwt-decode";
 
 const TOKEN_KEY = 'my-token';
 const CURRENT_USER = 'current-user';
+const UNVERIFIED_USER = 'unverified-user';
 @Injectable({
   providedIn: 'root',
 })
@@ -16,13 +17,12 @@ export class AuthService {
 
   constructor(private reqS: RequestService) {
     this.loadToken();
-    console.log(this.userAuthenticated())
+    // console.log(this.userAuthenticated())
   }
 
   async loadToken() {
     const token = localStorage.getItem(TOKEN_KEY);
     if (token) {
-      console.log('set token: ', token);
       this.token = token;
       this.isAuthenticated.next(true);
     } else {
@@ -50,9 +50,8 @@ export class AuthService {
     return this.reqS.post(authEndpoints.signup, credentials).pipe(
       tap(res => {
         console.log(res);
-        localStorage.setItem(CURRENT_USER, JSON.stringify(res.data))
-        // localStorage.setItem(TOKEN_KEY,  res.token.token)
-        this.isAuthenticated.next(true);
+        localStorage.setItem(UNVERIFIED_USER, JSON.stringify(res.data))
+        // this.isAuthenticated.next(true);
         return res
       })
     );
@@ -72,6 +71,18 @@ export class AuthService {
   getUser(id): Observable<any> {
     return this.reqS.get(baseEndpoints.user + '/'+ id)
   }
+  verifyUser(id, obj): Observable<any> {
+    return this.reqS.post(authEndpoints.activate + '/'+ id, obj).pipe(
+      tap(res => {
+        console.log(res);
+        const {token, user} = res.data
+        localStorage.setItem(CURRENT_USER, JSON.stringify(user))
+        localStorage.setItem(TOKEN_KEY,  token.token)
+        this.isAuthenticated.next(true);
+        return res
+      })
+    );
+  }
   private save_token(data: { success: any; token: string; }) {
     if (data.success) {
         localStorage.setItem('token', data.token);
@@ -86,7 +97,7 @@ export class AuthService {
 
   logout() {
     this.isAuthenticated.next(false);
-    localStorage.remove( TOKEN_KEY);
+    localStorage.clear();
   }
   public userAuthenticated(): boolean {
     const token = localStorage.getItem(TOKEN_KEY);
@@ -95,7 +106,7 @@ export class AuthService {
       if (Date.now() >= decode['exp'] * 1000) {
         return false;
       }
-      console.log('authenticated')
+      // console.log('authenticated')
       return true
 
     }else{

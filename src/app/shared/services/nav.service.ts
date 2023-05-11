@@ -1,106 +1,144 @@
-import { Injectable, HostListener } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { InventoryService } from 'src/app/core/service/inventory/inventory.service';
+import { Injectable, HostListener } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
+import { InventoryService } from "src/app/core/service/inventory/inventory.service";
 
 // Menu
 export interface Menu {
-	path?: string;
-	title?: string;
-	type?: string;
-	megaMenu?: boolean;
-	image?: string;
-	active?: boolean;
-	badge?: boolean;
-	badgeText?: string;
-	children?: Menu[];
+  path?: string;
+  title?: string;
+  type?: string;
+  megaMenu?: boolean;
+  image?: string;
+  active?: boolean;
+  badge?: boolean;
+  badgeText?: string;
+  children?: Menu[];
 }
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: "root",
 })
-
 export class NavService {
-	
-	categories =  [
-		{ path: '/shop/category/baby-child', title: 'Baby & Child', type: 'link' },
-		{ path: '/shop/category/women-care', title: 'Women Care', type: 'link' },
-		{ path: '/shop/category/men-care', title: 'Men Care', type: 'link' },
-		{ path: '/shop/category/vitamins', title: 'Vitamins', type: 'link' },
-		{ path: '/shop/category/hair-care', title: 'Hair Care', type: 'link' },
-		{ path: '/shop/category/skin-care', title: 'Skin Care', type: 'link' },
-		{ path: '/shop/category/oral-care', title: 'Oral Care', type: 'link' },
-		{ path: '/shop/category/organic-products', title: 'Organic Products', type: 'link' },
-		{ path: '/shop/category/medical-supplies', title: 'Medical Supplies', type: 'link' },
-	]
-	  constructor(private invS: InventoryService){
-	}
-	public screenWidth: any;
-	public leftMenuToggle: boolean = false;
-	public mainMenuToggle: boolean = false;
+  categories = [ ];
+  LEFTMENUITEMS: Menu[] = [
+    {
+      title: "home",
+      type: "link",
+      path: "/home/main",
+      active: false,
+    },
+    {
+      title: "Prescription",
+      type: "sub",
+      active: false,
+      children: [
+        {
+          path: "/prescription/upload-prescription",
+          title: "upload prescription",
+          type: "link",
+        },
+        {
+          path: "/prescription/prescription-history",
+          title: "prescription history",
+          type: "link",
+        },
+      ],
+    },
+    {
+      title: "blog",
+      type: "link",
+      path: "/home/blog",
+      active: false,
+    },
+    {
+      title: "contact",
+      type: "link",
+      path: "/home/contact",
+      active: false,
+    },
+  ];
+  MENUITEMS: Menu[] = [
+    {
+      title: "home",
+      type: "link",
+      path: "/home/main",
+      active: false,
+    },
+    {
+      title: "Prescription",
+      type: "sub",
+      active: false,
+      children: [
+        {
+          path: "/prescription/upload-prescription",
+          title: "upload prescription",
+          type: "link",
+        },
+        {
+          path: "/prescription/prescription-history",
+          title: "prescription history",
+          type: "link",
+        },
+      ],
+    },
+    {
+      title: "blog",
+      type: "link",
+      path: "/home/blog",
+      active: false,
+    },
+    {
+      title: "contact",
+      type: "link",
+      path: "/pages/contact",
+      active: false,
+    },
+  ];
 
-	// Windows width
-	@HostListener('window:resize', ['$event'])
-	onResize(event?) {
-		this.screenWidth = window.innerWidth;
-	}
+  constructor(private invS: InventoryService) {
+    this.loadCategory();
+  }
+  loadCategory() {
+    console.log("NAV SERVICE");
+    this.invS.allCategories().subscribe((e: any) => {
+      console.log(e);
+      this.categories = e.data.map((cat) => {
+        return {
+          path: "/shop/category/" + cat._id,
+          title: cat.category,
+          type: "link",
+        };
+      });
+	  this.LEFTMENUITEMS.splice(1,0,     {
+		title: "Categories",
+		type: "sub",
+		active: false,
+		children: this.categories,
+	  })
+	  this.MENUITEMS.splice(1,0,    {
+		title: "Categories",
+		type: "sub",
+		active: false,
+		children: this.categories,
+	  },)
+	  this.leftMenuItems.next(this.LEFTMENUITEMS)
+	  this.items.next(this.MENUITEMS)
+    });
+  }
+  public screenWidth: any;
+  public leftMenuToggle: boolean = false;
+  public mainMenuToggle: boolean = false;
 
-	MENUITEMS: Menu[] = [
-		{
-			title: 'home', type: 'link',path: '/home/main', active: false
-		},
-		{
-			title: 'Categories', type: 'sub', active: false,
-			children: this.categories
-		},
-		{
-			title: 'Prescription', type: 'sub', active: false, children: [
-				{ path: '/prescription/upload-prescription', title: 'upload prescription', type: 'link' },
-				{ path: '/prescription/prescription-history', title: 'prescription history', type: 'link' },
-			]
-		},
-		{
-			title: 'blog', type: 'link',path: '/home/blog', active: false
-		},
-		{
-			title: 'contact', type: 'link',path: '/pages/contact', active: false
-		},
-	];
+  // Windows width
+  @HostListener("window:resize", ["$event"])
+  onResize(event?) {
+    this.screenWidth = window.innerWidth;
+  }
 
-	LEFTMENUITEMS: Menu[] = [
-		
-		{
-			title: 'home', type: 'link',path: '/home/main', active: false
-		},
-		{
-			title: 'Categories', type: 'sub', active: false,
-			children: [
-				{ path: '/shop/category/baby-child', title: 'Baby & Child', type: 'link' },
-				{ path: '/shop/category/women-care', title: 'Women Care', type: 'link' },
-				{ path: '/shop/category/men-care', title: 'Men Care', type: 'link' },
-				{ path: '/shop/category/vitamins', title: 'Vitamins', type: 'link' },
-				{ path: '/shop/category/hair-care', title: 'Hair Care', type: 'link' },
-				{ path: '/shop/category/skin-care', title: 'Skin Care', type: 'link' },
-				{ path: '/shop/category/oral-care', title: 'Oral Care', type: 'link' },
-				{ path: '/shop/category/organic-products', title: 'Organic Products', type: 'link' },
-				{ path: '/shop/category/medical-supplies', title: 'Medical Supplies', type: 'link' },
-			]
-		},
-		{
-			title: 'Prescription', type: 'sub', active: false, children: [
-				{ path: '/prescription/upload-prescription', title: 'upload prescription', type: 'link' },
-				{ path: '/prescription/prescription-history', title: 'prescription history', type: 'link' },
-			]
-		},
-		{
-			title: 'blog', type: 'link',path: '/home/blog', active: false
-		},
-		{
-			title: 'contact', type: 'link',path: '/home/contact', active: false
-		}
-	];
 
-	// Array
-	items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
-	leftMenuItems = new BehaviorSubject<Menu[]>(this.LEFTMENUITEMS);
 
+  
+  // Array
+  items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
+  leftMenuItems = new BehaviorSubject<Menu[]>(this.LEFTMENUITEMS);
 }

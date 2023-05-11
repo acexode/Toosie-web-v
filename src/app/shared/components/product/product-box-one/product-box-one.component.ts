@@ -31,7 +31,7 @@ export class ProductBoxOneComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.product);
+    // console.log(this.product);
     if (this.loader) {
       setTimeout(() => {
         this.loader = false;
