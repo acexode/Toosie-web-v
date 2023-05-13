@@ -125,12 +125,15 @@
                                             Shipping
                                             <div class="shipping">
                                                 <div class="shopping-option">
-                                                    <input type="radio" value="delivery" [formControl]="checkoutForm.controls['deliveryType']" checked="checked"
-                                                        id="free-shipping">
+                                                    <input type="radio" value="delivery"
+                                                        [formControl]="checkoutForm.controls['deliveryType']"
+                                                        checked="checked" id="free-shipping">
                                                     <label for="free-shipping">Delivery</label>
                                                 </div>
                                                 <div class="shopping-option">
-                                                    <input type="radio" value="pickup" [formControl]="checkoutForm.controls['deliveryType']" id="local-pickup">
+                                                    <input type="radio" value="pickup"
+                                                        [formControl]="checkoutForm.controls['deliveryType']"
+                                                        id="local-pickup">
                                                     <label for="local-pickup">Local Pickup</label>
                                                 </div>
                                             </div>
@@ -173,6 +176,12 @@
                                             (click)="makePayment()">
                                             Place Order
                                         </button>
+                                        <!-- <angular4-paystack *ngIf="paymentType.value === 'card'" [email]="user?.email"
+                                            [amount]="amount * 100" [ref]="reference" [channels]="['card', 'bank']"
+                                            [style]="paystackBtn" (onClose)="paymentCancel()"
+                                            (callback)="paymentDone($event)">
+                                            Place Order ₦{{amount}}
+                                        </angular4-paystack> -->
                                         <!-- <ngx-paypal [config]="payPalConfig" *ngIf="payment == 'Paypal'"></ngx-paypal> -->
                                     </div>
                                 </div>

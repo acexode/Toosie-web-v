@@ -55,6 +55,9 @@ export class OrdersComponent implements OnInit {
       paymentId: {
         title: "Transaction ID",
       },
+      createdAt: {
+        title: "Order Date",
+      },
       products: {
         title: "Product",
         type: "html",
@@ -188,6 +191,7 @@ export class OrdersComponent implements OnInit {
       return res.map((e) => {
         return {
           id: e._id,
+          createdAt: new Date(e.createdAt).toLocaleDateString(),
           paymentId: e.paymentId.slice(0, 8),
           paymentMethod:
             e.paymentMethod === "pod"

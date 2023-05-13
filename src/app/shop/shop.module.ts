@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgxPayPalModule } from 'ngx-paypal';
 import { Ng5SliderModule } from 'ng5-slider';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { SharedModule } from '../shared/shared.module';
 import { ShopRoutingModule } from './shop-routing.module';
-
+// import { Angular4PaystackModule } from 'angular4-paystack';
 // Product Details Components
 import { ProductLeftSidebarComponent } from './product/sidebar/product-left-sidebar/product-left-sidebar.component';
 import { ProductRightSidebarComponent } from './product/sidebar/product-right-sidebar/product-right-sidebar.component';
@@ -60,7 +59,6 @@ import { SuccessComponent } from './checkout/success/success.component';
   ],
   imports: [
     CommonModule,
-    NgxPayPalModule,
     Ng5SliderModule,
     InfiniteScrollModule,
     SharedModule,

@@ -27,6 +27,15 @@ export class CheckoutComponent implements OnInit {
   public user: any;
   priorityDelivery = false;
   allLocations = locationList;
+  reference: string;
+  paystackBtn = {
+    padding: '14px',
+    background: '#0281b2',
+    width: '100%',
+    ['border-radius']: '8px',
+    ['font-weight']: 'bold',
+    ['font-size']: '16px',
+  };
   constructor(
     private fb: FormBuilder,
     public productService: ProductService,
@@ -54,6 +63,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.reference = `ref-${Math.ceil(Math.random() * 10e13)}`;
     this.user = this.authS.currentUser();
     console.log("hello world", this.user);
     this.checkoutForm.patchValue({
@@ -84,7 +94,7 @@ export class CheckoutComponent implements OnInit {
     return this.productService.cartTotalAmount();
   }
 
-  makePayment() {
+  makePayment(paymentMethod = 'pod', paymentId = null) {
     const values = {
       ...this.checkoutForm.value,
       paymentMethod: this.payment.toLowerCase(),
@@ -122,5 +132,16 @@ export class CheckoutComponent implements OnInit {
       // this.amount += this.allLocations.filter((f) => f.label === city)[0].value;
     }
     console.log(this.priorityDelivery);
+  }
+  get paymentType() {
+    return this.checkoutForm.get('paymentType');
+  }
+
+  paymentDone(ref: any) {
+    this.makePayment('card', ref.reference);
+  }
+
+  paymentCancel() {
+    console.log('payment failed');
   }
 }
