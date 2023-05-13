@@ -10,7 +10,7 @@ import { Product } from "../../shared/classes/product";
 import { ProductService } from "../../shared/services/product.service";
 import { OrderService } from "../../shared/services/order.service";
 import { ToastrService } from "ngx-toastr";
-
+declare var PaystackPop;
 @Component({
   selector: "app-checkout",
   templateUrl: "./checkout.component.html",
@@ -57,7 +57,7 @@ export class CheckoutComponent implements OnInit {
       address: ["", [Validators.required, Validators.maxLength(50)]],
       city: ["", Validators.required],
       state: ["", Validators.required],
-      paymentType: ["card", [Validators.required]],
+      paymentMethod: ["card", [Validators.required]],
       deliveryType: ["delivery", [Validators.required]],
     });
   }
@@ -94,11 +94,12 @@ export class CheckoutComponent implements OnInit {
     return this.productService.cartTotalAmount();
   }
 
-  makePayment(paymentMethod = 'pod', paymentId = null) {
+  makePayment(paymentId = null) {
     const values = {
       ...this.checkoutForm.value,
       paymentMethod: this.payment.toLowerCase(),
       priorityDelivery: this.priorityDelivery,
+      paymentId
     };
     console.log(this.products);
     this.orderService.createOrder(
@@ -133,15 +134,29 @@ export class CheckoutComponent implements OnInit {
     }
     console.log(this.priorityDelivery);
   }
-  get paymentType() {
-    return this.checkoutForm.get('paymentType');
+  get paymentMethod() {
+    return this.checkoutForm.get('paymentMethod');
   }
 
-  paymentDone(ref: any) {
-    this.makePayment('card', ref.reference);
-  }
+  payWithPaystack() {
+    var handler = PaystackPop.setup({
+      key: 'pk_live_8fa45918feaa0925713ae746c8ae810b67462b3a', // Replace with your public key
+      email: this.user.email,
+      channels: ['card', 'bank', 'ussd'],
+      amount: this.amount * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
+      currency: 'NGN', // Use GHS for Ghana Cedis or USD for US Dollars
+      ref: this.reference, // Replace with a reference you generated
+      callback: function(response) {
+        //this happens after the payment is completed successfully
+        const reference = response.reference;
+        this.makePayment(reference);
+        alert('Payment complete! Reference: ' + reference);
 
-  paymentCancel() {
-    console.log('payment failed');
+      },
+      onClose: function() {
+        alert('Transaction was not completed, window closed.');
+      },
+    });
+    handler.openIframe();
   }
 }

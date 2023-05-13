@@ -45,7 +45,7 @@ export class OrderService {
         orderDetails: orderDetails,
         totalCost: amount,
         paymentMethod: details.paymentMethod,
-        paymentId: 'lorem ipsum',
+        paymentId: details.paymentId,
     };
     // state.checkoutItems = item;
     // localStorage.setItem("checkoutItems", JSON.stringify(item)); 

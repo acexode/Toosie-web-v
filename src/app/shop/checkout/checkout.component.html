@@ -150,30 +150,37 @@
                                     <div class="upper-box">
                                         <div class="payment-options">
                                             <ul>
-                                                <!-- <li>
+                                                <li>
                                                     <div class="radio-option">
-                                                        <input type="radio" [(ngModel)]="payment" [value]="'POD'"  name="payment-group" id="payment-2">
+                                                        <input type="radio" [formControl]="checkoutForm.controls['paymentMethod']" [value]="'pod'"
+                                                            name="payment-group" id="payment-2">
                                                         <label for="payment-2">Payment on Delivery
-                                                            <span class="small-text">Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</span></label>
+                                                            <span class="small-text">Please send a check to Store Name,
+                                                                Store Street, Store Town, Store State / County, Store
+                                                                Postcode.</span></label>
                                                     </div>
-                                                </li> -->
-                                                <!-- <li>
+                                                </li>
+                                                <li>
                                                     <div class="radio-option paypal">
-                                                        <input type="radio" [(ngModel)]="payment" [value]="'card'"
+                                                        <input type="radio" [formControl]="checkoutForm.controls['paymentMethod']" [value]="'card'"
                                                             name="payment-group" id="payment-3">
                                                         <label for="payment-3">Card<span class="image"><img
                                                                     *ngIf="payment =='card' " style="width: 30%"
                                                                     src="assets/images/debit-card.png"
                                                                     alt="" /></span></label>
                                                     </div>
-                                                </li> -->
-                                                <!-- <label class="text-danger" *ngIf="payment =='card' " for="payment-3">Card payment is currently not supported</label> -->
+                                                </li>
+
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="text-right">
-                                        <button type="submit" class="btn-solid btn" [disabled]="!checkoutForm.valid"
-                                            (click)="makePayment()">
+                                        <button type="submit" *ngIf="paymentMethod.value === 'pod'" class="btn-solid btn"
+                                            [disabled]="!checkoutForm.valid" (click)="makePayment('pod' + reference)">
+                                            Place Order
+                                        </button>
+                                        <button type="submit" *ngIf="paymentMethod.value === 'card'" class="btn-solid btn"
+                                            [disabled]="!checkoutForm.valid" (click)="payWithPaystack()">
                                             Place Order
                                         </button>
                                         <!-- <angular4-paystack *ngIf="paymentType.value === 'card'" [email]="user?.email"
