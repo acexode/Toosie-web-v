@@ -142,7 +142,7 @@ export class CheckoutComponent implements OnInit {
     var handler = PaystackPop.setup({
       key: 'pk_live_8fa45918feaa0925713ae746c8ae810b67462b3a', // Replace with your public key
       email: this.user.email,
-      channels: ['card', 'bank', 'ussd'],
+      channels: ['card', 'bank', 'bank_transfer'],
       amount: this.amount * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
       currency: 'NGN', // Use GHS for Ghana Cedis or USD for US Dollars
       ref: this.reference, // Replace with a reference you generated
