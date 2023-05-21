@@ -8,6 +8,7 @@ import { AdminBlogList } from './blog-list/blog-list.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { CKEditorModule } from 'ngx-ckeditor';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     FormsModule,
     ReactiveFormsModule,
     Ng2SmartTableModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    CKEditorModule
   ]
 })
 export class AdminBlogModule { }

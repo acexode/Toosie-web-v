@@ -68,6 +68,9 @@ export class AuthService {
   getUsers(): Observable<any> {
     return this.reqS.get(baseEndpoints.user)
   }
+  getReferrals(): Observable<any> {
+    return this.reqS.get(baseEndpoints.referrals)
+  }
   getUser(id): Observable<any> {
     return this.reqS.get(baseEndpoints.user + '/'+ id)
   }

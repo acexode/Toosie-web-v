@@ -44,7 +44,9 @@
                     <div class="digital-add needs-validation">
                         <div class="form-group mb-0">
                             <div class="description-sm">
-                                <textarea class="form-control" formControlName="blogContent" language="en"></textarea>
+                                <!-- <textarea class="form-control" formControlName="blogContent" language="en"></textarea> -->
+                                <ck-editor name="editor1" formControlName="blogContent" skin="moono-lisa" language="en" [fullPage]="false"></ck-editor>
+
                             </div>
                         </div>
                     </div>

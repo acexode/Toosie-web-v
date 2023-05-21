@@ -13,6 +13,8 @@ export class AddBlogComponent implements OnInit {
   public digital_list = []
   public categories = []
   public products = []
+  public editorValue: string = '';
+  public Editor;
   min: any = 0;
   max: any = 0; 
   productPage = true
@@ -44,6 +46,7 @@ export class AddBlogComponent implements OnInit {
   }
   ngOnInit() {
     this.user = this.authS.currentUser()
+    this.blogContent.valueChanges.subscribe(e => console.log(e))
     const catId = this.route.snapshot.params.id
     console.log(this.user)
     // if(catId){
@@ -75,6 +78,10 @@ export class AddBlogComponent implements OnInit {
         this.files = []
         this.blogForm.reset()
         this.router.navigate(['dashboard/main/blog/blog-list'])
+      }, err => {
+        console.log(err);
+        alert(err.error.message)
+        this.loading = false
       })
     })
   }
