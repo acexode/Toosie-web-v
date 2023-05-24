@@ -20,6 +20,14 @@ const routes: Routes = [
       title: "Create Blog",
       breadcrumb: "Create Blog"
     }
+  },
+  {
+    path: 'edit-blog/:id',
+    component: AddBlogComponent,
+    data: {
+      title: "Edit Blog",
+      breadcrumb: "Edit Blog"
+    }
   }
 ];
 

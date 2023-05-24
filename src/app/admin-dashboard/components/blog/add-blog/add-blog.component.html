@@ -17,8 +17,12 @@
                         </div>
 
                        
-                        <label class="col-form-label pt-0"> Blog Image Upload</label>
-                        <div class="card-body dropzone-custom p-0">
+                        <div *ngIf="!showDropZone" class="card">
+                            <img [src]="editBlog?.blogImage" alt="">
+                            <div (click)="showDropZone = !showDropZone" *ngIf="editBlog?.blogImage" class="btn btn-primary mt-3">Replace Image</div>
+                        </div>
+                        <label *ngIf="showDropZone" class="col-form-label pt-0"> Blog Image Upload</label>
+                        <div *ngIf="showDropZone" class="card-body dropzone-custom p-0">
                             <ngx-dropzone (change)="onSelect($event)">
                                 <div class="dropzone dropzone-primary" style="border: none;">
                                 <div class="dz-message needsclick">

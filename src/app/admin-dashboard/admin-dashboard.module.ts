@@ -5,9 +5,9 @@ import { AdminDashboardRoutingModule } from './admin-dashboard-routing.module';
 import { AdminSharedModule } from './shared/shared.module';
 
 
-
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [
     CommonModule,
     AdminDashboardRoutingModule,

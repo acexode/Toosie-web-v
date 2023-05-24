@@ -42,6 +42,13 @@ export const content: Routes = [
       breadcrumb: "Category"
     }
   },
+  {
+    path: 'prescriptions',
+    loadChildren: () => import('../../components/prescription/prescription.module').then(m => m.PrescriptionModule),
+    data: {
+      breadcrumb: "Category"
+    }
+  },
  
   
   

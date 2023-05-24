@@ -22,6 +22,9 @@ export class BlogService {
   createBlog(data){
     return this.reqS.post(baseEndpoints.blog, data)
   }
+  updateBlog(data, id){
+    return this.reqS.put(baseEndpoints.blog + '/' + id, data)
+  }
   uploadMedia(formData): Observable<any> {
     return this.reqS.post(miscEndpoint.mediaUpload, formData);
   }

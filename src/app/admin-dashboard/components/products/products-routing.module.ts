@@ -39,8 +39,8 @@ const routes: Routes = [
         path: 'edit-product/:id',
         component: DigitalAddComponent,
         data: {
-          title: "Add Products",
-          breadcrumb: "Add Product"
+          title: "Edit Products",
+          breadcrumb: "Edit Product"
         }
       }
     ]

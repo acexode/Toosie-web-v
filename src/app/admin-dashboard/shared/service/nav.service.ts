@@ -73,6 +73,11 @@ export class NavService {
 				{ path: 'users/list-user', title: 'User List', type: 'link' },
 			]
 		},
+		{
+			title: 'Prescription', icon: 'user-plus', type: 'sub', active: false, children: [
+				{ path: 'prescriptions/list', title: 'Prescription List', type: 'link' },
+			]
+		},
 	]
 	// Array
 	items = new BehaviorSubject<Menu[]>(this.MENUITEMS);

@@ -42,6 +42,11 @@ export class AdminBlogList implements OnInit {
       },
       blogAuthor: {
         title: 'Author'
+      },
+      edit: {
+        title: 'Edit',
+        filter: false,
+        type: 'html'
       }
     },
   };
@@ -54,8 +59,9 @@ export class AdminBlogList implements OnInit {
           ...blog,
           blogAuthor: blog?.blogAuthor?.fullName,
           blogContent: blog.blogContent.slice(0,50) + '...',
-          blogImage: `<img src=${blog?.blogImage} class='imgTable'>`
-
+          blogImage: `<img src=${blog?.blogImage} class='imgTable'>`,
+            edit: `
+           <a href=dashboard/main/blog/edit-blog/${blog._id} class="ng2-smart-action ng2-smart-action-edit-edit ng-star-inserted"><a/>`
         }
       })
     })

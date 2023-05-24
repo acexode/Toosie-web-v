@@ -28,10 +28,14 @@ export class PrescriptionService {
   allPrescriptions(): Observable<any> {
     return this.reqS
       .get(baseEndpoints.prescription)
-      .pipe(map((data: any) => data.prescription));
+      
   }
   userPrescriptions(id): Observable<any> {
     return this.reqS
       .get(baseEndpoints.prescription + "?customerId=" + id)
+  }
+  deletePrescriptions(id): Observable<any> {
+    return this.reqS
+      .delete(baseEndpoints.prescription + "/" + id)
   }
 }
