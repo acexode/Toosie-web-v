@@ -28,6 +28,8 @@ export class ProductNoSidebarComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    // alert('hello')
+    console.log(this.product);
   }
 
   // Get Product Color

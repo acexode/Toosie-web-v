@@ -33,12 +33,14 @@ import { WishlistComponent } from './wishlist/wishlist.component';
 import { CompareComponent } from './compare/compare.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { SuccessComponent } from './checkout/success/success.component';
+import { CollectionNoSidebarComponent } from './collection/collection-no-sidebar/collection-no-sidebar.component';
 
 
 @NgModule({
   declarations: [
     ProductLeftSidebarComponent, 
     ProductRightSidebarComponent,
+    CollectionNoSidebarComponent,
     ProductNoSidebarComponent,
     ServicesComponent,
     CountdownComponent,

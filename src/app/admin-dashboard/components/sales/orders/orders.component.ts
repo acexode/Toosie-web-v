@@ -15,6 +15,7 @@ export class OrdersComponent implements OnInit {
   public order = [];
   lagosOrder = [];
   abujaOrder = [];
+  storePickupOrder = [];
   priorityOrder = [];
   kanoOrder = [];
   pendingDelivery = [];
@@ -125,6 +126,13 @@ export class OrdersComponent implements OnInit {
       this.orderS.allOrder.next(res.data)
       console.log(res);
       this.orderS.checkoutItems
+      this.storePickupOrder = this.formatData(
+        res.data.filter(
+          (e) =>
+            e.shipping?.city?.trim().toLowerCase() === "store pickup" ||
+            e.shipping?.state?.trim().toLowerCase() === "store pickup"
+        )
+      );
       this.lagosOrder = this.formatData(
         res.data.filter(
           (e) =>
@@ -191,7 +199,7 @@ export class OrdersComponent implements OnInit {
       return res.map((e) => {
         return {
           id: e._id,
-          createdAt: new Date(e.createdAt).toLocaleDateString(),
+          createdAt: new Date(e.createdAt).toLocaleDateString() + ', Time ' + new Date(e.createdAt).toLocaleTimeString(),
           paymentId: e.paymentId.slice(0, 8),
           paymentMethod:
             e.paymentMethod === "pod"

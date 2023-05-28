@@ -17,6 +17,7 @@ import { SuccessComponent } from './checkout/success/success.component';
 import { Resolver } from '../shared/services/resolver.service';
 import { SingleProductResolver } from '../shared/services/single-product.service';
 import { AuthGuard } from '../core/guards/auth.guard';
+import { CollectionNoSidebarComponent } from './collection/collection-no-sidebar/collection-no-sidebar.component';
 
 const routes: Routes = [
   {
@@ -27,7 +28,11 @@ const routes: Routes = [
     }
   },
   {
-    path: 'product/no/sidebar/:slug',
+    path: 'product/search',
+    component: CollectionNoSidebarComponent
+  },
+  {
+    path: 'search/:slug',
     component: ProductNoSidebarComponent,
     resolve: {
       data: Resolver

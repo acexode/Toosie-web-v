@@ -9,6 +9,7 @@ import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operato
 })
 export class InventoryService {
   cartStore: BehaviorSubject<any> = new BehaviorSubject([]);
+  searchStore: BehaviorSubject<any> = new BehaviorSubject([]);
   categoryStore: BehaviorSubject<any> = new BehaviorSubject([]);
   popularStore: BehaviorSubject<any> = new BehaviorSubject([]);
   latestStore: BehaviorSubject<any> = new BehaviorSubject([]);
@@ -45,9 +46,9 @@ export class InventoryService {
     return this.reqS.get(inventoryEndpoints.myOrders + '1');
   }
   searchInventory(term){
-    console.log(term.length);
+
     this.loading.next(true);
-    return this.reqS.post(inventoryEndpoints.searchInventory, {searchText: term });
+    return this.reqS.get(baseEndpoints.searchProduct+'?searchText=' + term );
   }
   search(terms: Observable<string>){
     console.log(terms);

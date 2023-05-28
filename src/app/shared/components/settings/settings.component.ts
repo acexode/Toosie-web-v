@@ -1,9 +1,11 @@
 import { Component, OnInit, Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductService } from "../../services/product.service";
 import { Product } from "../../classes/product";
+import { Router } from '@angular/router';
+import { InventoryService } from 'src/app/core/service/inventory/inventory.service';
 
 @Component({
   selector: 'app-settings',
@@ -14,7 +16,8 @@ export class SettingsComponent implements OnInit {
 
   public products: Product[] = [];
   public search: boolean = false;
-  
+  searchTerm ='';
+  searchTerm$ = new Subject<string>();
   public languages = [{ 
     name: 'English',
     code: 'en'
@@ -43,6 +46,8 @@ export class SettingsComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
     private translate: TranslateService,
+    private invS: InventoryService,
+    private router: Router,
     public productService: ProductService) {
     this.productService.cartItems.subscribe(response => this.products = response);
   }
@@ -50,6 +55,32 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  searchItem(){
+
+    console.log(this.searchTerm);
+    this.searchTerm$.next(this.searchTerm);
+    this.invS.searchInventory(this.searchTerm).subscribe((e: any) => {
+      console.log(e);
+      this.invS.searchStore.next(e.data)
+      const items = e.data;
+      if (items.length > 0) {
+        this.getSimilarItems(items[0].category);
+      }
+      this.invS.loading.next(false);
+
+    });
+  }
+  getSimilarItems(id) {
+    this.invS.inventoryByCategory(id).subscribe((e: any) => {
+      console.log(e);
+      this.invS.similarStore.next(e.data);
+      console.log(e.data);
+      this.searchToggle()
+  
+      this.router.navigate(['shop/product/search'])
+    });
+
+  }
   searchToggle(){
     this.search = !this.search;
   }

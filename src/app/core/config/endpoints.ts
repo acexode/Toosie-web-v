@@ -5,6 +5,7 @@ export const baseEndpoints = {
     auth: serverBaseUrl + '/auth',
     user: serverBaseUrl + '/users',
     referrals: serverBaseUrl + '/users/referrals',
+    searchProduct: serverBaseUrl + '/searchProduct',
     inventory: serverBaseUrl + '/product',
     category: serverBaseUrl + '/category',
     prescription: serverBaseUrl + '/prescription',
