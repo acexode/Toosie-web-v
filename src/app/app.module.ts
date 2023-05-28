@@ -17,6 +17,8 @@ import { ShopComponent } from './shop/shop.component';
 import { PagesComponent } from './pages/pages.component';
 import { AdminSharedModule } from './admin-dashboard/shared/shared.module';
 import { PrescriptionComponent } from './prescription/prescription.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 // AoT requires an exported function for factories
@@ -53,7 +55,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     SharedModule,
     AdminSharedModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
