@@ -6,7 +6,6 @@ import { orderDB } from "../../../shared/tables/order-list";
 import { ToastrService } from "ngx-toastr";
 import { ExportServiceService } from "src/app/core/service/export-service/export-service.service";
 import { ViewOrderComponent } from "../view-order/view-order.component";
-import { SwPush } from "@angular/service-worker";
 
 @Component({
   selector: "app-orders",
@@ -31,7 +30,6 @@ export class OrdersComponent implements OnInit {
     private orderS: OrderService,
     private exportS: ExportServiceService,
     private toastrService: ToastrService,
-    private swPush: SwPush
   ) {
     // this.order = orderDB.list_order;
     console.log(this.order);
@@ -123,22 +121,9 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit() {
     this.loadData();
-    this.requestSubscription()
-  }
-  requestSubscription = () => {
-    console.log('START');
-    if (!this.swPush.isEnabled) {
-      console.log("Notification is not enabled.");
-      return;
-    }
-    console.log('Run Notification');
 
-    this.swPush.requestSubscription({
-      serverPublicKey: 'BEvFjH8RiqlzCGg3KQOv-xxktBqiiVHPCMMlDxRTTrhgA1nRPvV7yBQ79Aa8bT6ZeYT6b06ViQ2sp2AoOSJ0R_8'
-    }).then((res) => {
-      console.log(JSON.stringify(res));
-    }).catch((error) => console.log(error));
-  };
+  }
+
 
   loadData() {
     this.orderS.getAllOrders().subscribe((res: any) => {

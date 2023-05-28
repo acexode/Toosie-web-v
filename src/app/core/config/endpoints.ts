@@ -10,6 +10,7 @@ export const baseEndpoints = {
     category: serverBaseUrl + '/category',
     prescription: serverBaseUrl + '/prescription',
     order: serverBaseUrl + '/order',
+    notify: serverBaseUrl + '/notify',
     blog: serverBaseUrl + '/blog',
     banner: serverBaseUrl + '/banner',
 
@@ -18,6 +19,7 @@ export const baseEndpoints = {
 export const authEndpoints = {
     login: baseEndpoints.auth + '/login',
     signup: baseEndpoints.auth + '/signup',
+    
     activate: baseEndpoints.auth + '/register/activate',
     forgotPasswordInitiate: baseEndpoints.auth + '/forgot-password/initiate',
     forgotPasswordComplete: baseEndpoints.auth + '/forgot-password/complete',
