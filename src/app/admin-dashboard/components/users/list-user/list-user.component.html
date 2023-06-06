@@ -9,7 +9,8 @@
                 <ngb-tab title="Users">
                     <ng-template ngbTabContent>
                         <div class="table-responsive">
-                            <ng2-smart-table [settings]="settings" [source]="user_list"></ng2-smart-table>
+                            <ng2-smart-table (deleteConfirm)="onDeleteConfirm($event)" [settings]="settings"
+                                [source]="user_list"></ng2-smart-table>
                         </div>
                     </ng-template>
                 </ngb-tab>
@@ -21,7 +22,7 @@
                     </ng-template>
                 </ngb-tab>
             </ngb-tabset>
-            
+
         </div>
     </div>
 </div>

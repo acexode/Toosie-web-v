@@ -65,6 +65,9 @@ export class AuthService {
       })
     );
   }
+  deleteUser(id): Observable<any> {
+    return this.reqS.delete(baseEndpoints.user + '/' + id)
+  }
   getUsers(): Observable<any> {
     return this.reqS.get(baseEndpoints.user)
   }
