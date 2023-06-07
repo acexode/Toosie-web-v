@@ -1,23 +1,29 @@
+import { SwPush } from '@angular/service-worker';
 import { IProducts } from './../../../../../core/model/product.interface';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { digitalListDB } from 'src/app/admin-dashboard/shared/tables/digital-list';
 import { ExportServiceService } from 'src/app/core/service/export-service/export-service.service';
 import { InventoryService } from 'src/app/core/service/inventory/inventory.service';
+import { RequestService } from 'src/app/core/request/request.service';
+import { baseEndpoints } from 'src/app/core/config/endpoints';
 @Component({
   selector: 'app-digital-list',
   templateUrl: './digital-list.component.html',
   styleUrls: ['./digital-list.component.scss']
 })
-export class DigitalListComponent implements OnInit {
+export class DigitalListComponent implements OnInit, AfterViewInit {
   public digital_list = []
   public categories = []
   public products = []
   public exportProduct = []
 
-  constructor(private invS: InventoryService, private exportS: ExportServiceService,
-    private toastrService: ToastrService,) {
+  constructor(private invS: InventoryService, private exportS: ExportServiceService, private swPush: SwPush,
+    private toastrService: ToastrService, private reqS: RequestService, private toast: ToastrService) {
     this.digital_list = digitalListDB.digital_list;
+  }
+  ngAfterViewInit(): void {
+    this.requestSubscription();
   }
 
   public settings = {
@@ -65,7 +71,7 @@ export class DigitalListComponent implements OnInit {
     },
   };
 
-  ngOnInit() { 
+  ngOnInit() {
     this.invS.allCategories().subscribe((e:any) =>{
       this.categories = e.data
     })
@@ -123,5 +129,21 @@ export class DigitalListComponent implements OnInit {
       this.toastrService.error("Nothing to export");
     }
   }
+
+  requestSubscription = () => {
+    console.log('INIT PERMISSION');
+    if (!this.swPush.isEnabled) {
+      console.log("Notification is not enabled.");
+      return;
+    }
+    console.log('SHOW PERMISSION');
+    this.swPush.requestSubscription({
+      serverPublicKey: 'BEvFjH8RiqlzCGg3KQOv-xxktBqiiVHPCMMlDxRTTrhgA1nRPvV7yBQ79Aa8bT6ZeYT6b06ViQ2sp2AoOSJ0R_8'
+    }).then((res) => {
+      this.reqS.post(baseEndpoints.notify, res)
+      this.toast.success("You will receive notification when a new order is created");
+      console.log(JSON.stringify(res));
+    }).catch((_) => this.toast.error("Unable to save user permission"));
+  };
 
 }
